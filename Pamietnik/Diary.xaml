@@ -1,0 +1,56 @@
+﻿<Page
+    x:Class="Pamietnik.Diary"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Pamietnik"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Loaded="Page_Loaded">
+
+    <Grid>
+
+        <Grid.Background>
+            <ImageBrush ImageSource="Images/bg.png" Stretch="Fill"/>
+        </Grid.Background>
+
+        <!-- Określenie kolumn -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!-- Określenie wierszy -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- Belka z menu -->
+        <CommandBar Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+            <AppBarButton x:Name="addNewEntryBtn" Icon="Add"/>
+        </CommandBar>
+
+        <!-- Widok kalendarza -->
+        <CalendarView Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="#FFFFFF" RequestedTheme="Dark" Opacity="0.5"/>
+
+        <!-- Lista wszystkich wpisów -->
+        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Text="Ostatnie wpisy:"  VerticalAlignment="Top" Margin="10,50,0,0"/>
+        <ListView x:Name="entriesListView" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="0,75,0,0"/>
+
+        <!-- Zakładki -->
+        <Pivot x:Name="mainPivot" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+            <PivotItem Header="Wpis 1">
+
+                <!-- Treść wpisu -->
+                <RichEditBox x:Name="mainBox" Grid.Column="0" Grid.Row="2"  Grid.ColumnSpan="2" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="-833,821,833,-820.667"/>
+
+            </PivotItem>
+        </Pivot>
+
+
+
+
+
+    </Grid>
+</Page>
