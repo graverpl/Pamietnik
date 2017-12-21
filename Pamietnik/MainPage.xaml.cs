@@ -31,7 +31,7 @@ namespace Pamietnik
             this.InitializeComponent();
         }
 
-        private bool DataValidation(string user, string pass)
+        private static bool DataValidation(string user, string pass)
         {
             using (MySqlConnection conn = new MySqlConnection(connString))
             using (MySqlCommand cmd = new MySqlCommand("SELECT " + "Username, Password " + "FROM users " + "WHERE Username=@user AND Password=@pass;", conn))
@@ -43,6 +43,7 @@ namespace Pamietnik
 
                 MySqlDataReader login = cmd.ExecuteReader();
                 return login.Read();
+                
             }
         }
 
@@ -62,6 +63,7 @@ namespace Pamietnik
             if (loginSuccessful)
             {
                 this.Frame.Navigate(typeof(Diary));
+                
             }
             else
             {

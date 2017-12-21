@@ -116,6 +116,7 @@
     <Content Include="Images\bg.png" />
     <Content Include="Images\key.png" />
     <Content Include="Images\padlock.png" />
+    <Content Include="Images\plain_bg.png" />
     <Content Include="Images\signup.png" />
     <Content Include="Images\users.png" />
     <Content Include="Properties\Default.rd.xml" />

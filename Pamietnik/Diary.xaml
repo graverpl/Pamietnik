@@ -5,18 +5,18 @@
     xmlns:local="using:Pamietnik"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Loaded="Page_Loaded">
+    mc:Ignorable="d" Loaded="Page_Loaded" FontFamily="Segoe UI" FontSize="16" Foreground="White">
 
     <Grid>
-
         <Grid.Background>
-            <ImageBrush ImageSource="Images/bg.png" Stretch="Fill"/>
+            <ImageBrush ImageSource="Images/plain_bg.png" Stretch="Fill"/>
         </Grid.Background>
 
         <!-- Określenie kolumn -->
         <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="200"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition />
+            <ColumnDefinition MinWidth="300"/>
         </Grid.ColumnDefinitions>
 
         <!-- Określenie wierszy -->
@@ -27,23 +27,30 @@
         </Grid.RowDefinitions>
 
         <!-- Belka z menu -->
-        <CommandBar Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+        <CommandBar Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
             <AppBarButton x:Name="AddNewEntryBtn" Icon="Add" ToolTipService.ToolTip="Nowy wpis"/>
         </CommandBar>
 
+        <!-- Powitanie -->
+        <StackPanel Grid.Column="0" Grid.Row="1" >
+            <TextBlock x:Name="WelcomeTextBlock" Text="Witaj!" HorizontalAlignment="Left" Margin="20,20,0,0" FontSize="24"/>
+            <TextBlock x:Name="DateTextBlock" HorizontalAlignment="Left" Margin="20,20,0,0"/>
+            <TextBlock x:Name="CountdownTextBlock" HorizontalAlignment="Left" Margin="20,0,0,0" />
+            <TextBlock x:Name="JokeTextBlock" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="20,40,0,0" FontStyle="Italic"/>
+        </StackPanel>
         <!-- Widok kalendarza -->
-        <CalendarView Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="#FFFFFF" RequestedTheme="Dark" Opacity="0.5"/>
+        <CalendarView Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="#FFFFFF" RequestedTheme="Dark" Opacity="0.5"/>
 
         <!-- Lista wszystkich wpisów -->
-        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Text="Ostatnie wpisy:"  VerticalAlignment="Top" Margin="10,50,0,0"/>
-        <ListView x:Name="entriesListView" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="0,75,0,0"/>
+        <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Text="Ostatnie wpisy:"  VerticalAlignment="Top" Margin="10,50,0,0"/>
+        <ListView x:Name="entriesListView" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="0,75,0,0"/>
 
         <!-- Zakładki -->
-        <Pivot x:Name="mainPivot" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+        <Pivot x:Name="mainPivot" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
             <PivotItem Header="Wpis 1">
 
                 <!-- Treść wpisu -->
-                <RichEditBox x:Name="mainBox" Grid.Column="0" Grid.Row="2"  Grid.ColumnSpan="2" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="-833,821,833,-820.667"/>
+                <RichEditBox x:Name="mainBox" Grid.Column="0" Grid.Row="2"  Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="-833,821,833,-820.667"/>
 
             </PivotItem>
         </Pivot>
