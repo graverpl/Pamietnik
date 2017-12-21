@@ -33,7 +33,7 @@
 
         <!-- Powitanie -->
         <StackPanel Grid.Column="0" Grid.Row="1" >
-            <TextBlock x:Name="WelcomeTextBlock" Text="Witaj!" HorizontalAlignment="Left" Margin="20,20,0,0" FontSize="24"/>
+            <TextBlock x:Name="WelcomeTextBlock" HorizontalAlignment="Left" Margin="20,20,0,0" FontSize="24"/>
             <TextBlock x:Name="DateTextBlock" HorizontalAlignment="Left" Margin="20,20,0,0"/>
             <TextBlock x:Name="CountdownTextBlock" HorizontalAlignment="Left" Margin="20,0,0,0" />
             <TextBlock x:Name="JokeTextBlock" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="20,40,0,0" FontStyle="Italic"/>

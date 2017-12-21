@@ -12,45 +12,32 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using MySql.Data.MySqlClient;
-
-
-//Szablon elementu Pusta strona jest udokumentowany na stronie https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x415
 
 namespace Pamietnik
-{
-    /// <summary>
-    /// Pusta strona, która może być używana samodzielnie lub do której można nawigować wewnątrz ramki.
-    /// </summary>
+{ 
     public sealed partial class MainPage : Page
     {
-        const string connString = "server=karolczak.atthost24.pl;user id=4263_diary;pwd=Karol123!;persistsecurityinfo=True;database=4263_diary";
+        #region Zmienne
+
+        internal static string user, pass;
+
+        #endregion
+
+        #region Konstruktor
 
         public MainPage()
         {
             this.InitializeComponent();
         }
 
-        private static bool DataValidation(string user, string pass)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connString))
-            using (MySqlCommand cmd = new MySqlCommand("SELECT " + "Username, Password " + "FROM users " + "WHERE Username=@user AND Password=@pass;", conn))
-            {
+        #endregion
 
-                cmd.Parameters.AddWithValue("@user", user);
-                cmd.Parameters.AddWithValue("@pass", pass);
-                cmd.Connection.Open();
-
-                MySqlDataReader login = cmd.ExecuteReader();
-                return login.Read();
-                
-            }
-        }
+        #region Program
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            string user = UserTextBox.Text;
-            string pass = PassBox.Password;
+            user = UserTextBox.Text;
+            pass = PassBox.Password;
 
             if (user == "" || pass == "")
             {
@@ -58,12 +45,11 @@ namespace Pamietnik
                 return;
             }
 
-            bool loginSuccessful = DataValidation(user, pass);
+            bool loginSuccessful = DbConnections.DataValidation(user, pass);
 
             if (loginSuccessful)
             {
                 this.Frame.Navigate(typeof(Diary));
-                
             }
             else
             {
@@ -71,10 +57,14 @@ namespace Pamietnik
             }
         }
 
+        // Przejście do rejestracji
+
         private void TextBlock_Tapped(object sender, TappedRoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(Registration));
         }
+
+        #endregion
     }
 }
 
