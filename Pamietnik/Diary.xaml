@@ -28,7 +28,7 @@
 
         <!-- Belka z menu -->
         <CommandBar Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
-            <AppBarButton x:Name="addNewEntryBtn" Icon="Add"/>
+            <AppBarButton x:Name="AddNewEntryBtn" Icon="Add" ToolTipService.ToolTip="Nowy wpis"/>
         </CommandBar>
 
         <!-- Widok kalendarza -->

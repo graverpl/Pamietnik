@@ -34,28 +34,15 @@ namespace Pamietnik
         private bool DataValidation(string user, string pass)
         {
             using (MySqlConnection conn = new MySqlConnection(connString))
-            using (MySqlCommand cmd = new MySqlCommand("SELECT " +
-                "Username, Password " +
-                "FROM users " +
-                "WHERE Username=@user AND Password=@pass;", conn))
+            using (MySqlCommand cmd = new MySqlCommand("SELECT " + "Username, Password " + "FROM users " + "WHERE Username=@user AND Password=@pass;", conn))
             {
 
                 cmd.Parameters.AddWithValue("@user", user);
                 cmd.Parameters.AddWithValue("@pass", pass);
-                cmd.Connection = conn;
                 cmd.Connection.Open();
 
                 MySqlDataReader login = cmd.ExecuteReader();
-                if (login.Read())
-                {
-                    conn.Close();
-                    return true;
-                }
-                else
-                {
-                    conn.Close();
-                    return false;
-                }
+                return login.Read();
             }
         }
 
@@ -74,7 +61,7 @@ namespace Pamietnik
 
             if (loginSuccessful)
             {
-                this.Frame.Navigate(typeof(Diary), null);
+                this.Frame.Navigate(typeof(Diary));
             }
             else
             {
@@ -86,8 +73,6 @@ namespace Pamietnik
         {
             this.Frame.Navigate(typeof(Registration));
         }
-
-       
     }
 }
 
