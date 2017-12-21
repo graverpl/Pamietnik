@@ -6,7 +6,7 @@ using MySql.Data.MySqlClient;
 
 namespace Pamietnik
 {
-    internal class DbConnections
+    internal abstract class DbConnections
     {
         #region Zmienne
 
@@ -53,7 +53,7 @@ namespace Pamietnik
             }
         }
 
-        // Pobieranie dowcipu
+        // Pobieranie losowego dowcipu
 
         public static string GetJoke()
         {

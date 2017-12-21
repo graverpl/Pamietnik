@@ -44,16 +44,16 @@ namespace Pamietnik
 
             if (user == "" || pass == "" || name == "" || confirmPass == "")
             {
-                StatusTextBlock.Text = "Pola nie mogą być puste." + "\nWprowadź poprawne dane...";
+                StatusTextBlock.Text = Messages.MandatoryFields();
             }
             else if (PassBox.Password != ConfirmPassBox.Password)
             {
-                StatusTextBlock.Text = "Hasła nie są identyczne." + "\nSpróbuj jeszcze raz...";
+                StatusTextBlock.Text = Messages.PassConfirmationError();
             }
             else
             {
                 DbConnections.Register(name, user, pass, confirmPass);
-                StatusTextBlock.Text = "Konto zostało założone. Możesz się już zalogować...";
+                StatusTextBlock.Text = Messages.RegistrationCorrect();
                 await Task.Delay(3000);
                 this.Frame.Navigate(typeof(MainPage));
             }

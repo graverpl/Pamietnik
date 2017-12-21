@@ -41,7 +41,7 @@ namespace Pamietnik
 
             if (user == "" || pass == "")
             {
-                StatusTextBlock.Text = "Pola nie mogą być puste." + "\nProszę popraw dane i spróbuj jeszcze raz...";
+                StatusTextBlock.Text = Messages.MandatoryFields();
                 return;
             }
 
@@ -53,7 +53,7 @@ namespace Pamietnik
             }
             else
             {
-                StatusTextBlock.Text = "Niepoprawny login lub hasło." + "\nProszę popraw dane i spróbuj jeszcze raz...";
+                StatusTextBlock.Text = Messages.LoginError();
             }
         }
 

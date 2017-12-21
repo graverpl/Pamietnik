@@ -19,7 +19,7 @@ namespace Pamietnik
     {
         #region Zmienne
 
-        private string countDown;
+        private string countdown;
 
         #endregion
 
@@ -42,9 +42,9 @@ namespace Pamietnik
             DateTime startDate = DateTime.Now;
 
             TimeSpan timeLeft = stopDate - startDate;
-            countDown = string.Format("Do ferii zimowych pozostało {0} dni.", timeLeft.Days);
+            countdown = string.Format("Do ferii zimowych pozostało {0} dni.", timeLeft.Days);
 
-            CountdownTextBlock.Text = countDown;
+            CountdownTextBlock.Text = countdown;
             DateTextBlock.Text = "Dzisiaj mamy " + DateTime.Today.ToString("D") + " r.";
 
             // Wyświetlenie imienia
