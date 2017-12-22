@@ -27,5 +27,11 @@ namespace Pamietnik
         {
             return "Konto zostało założone. Możesz się już zalogować...";
         }
+
+        public static string ConnectionError()
+        {
+            return "Błąd połączenia z bazą danych" + "\nProszę spróbować za chwilę...";
+        }
+
     }
 }

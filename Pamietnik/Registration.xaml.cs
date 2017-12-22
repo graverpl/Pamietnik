@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
 namespace Pamietnik
 {
@@ -52,10 +53,18 @@ namespace Pamietnik
             }
             else
             {
-                DbConnections.Register(name, user, pass, confirmPass);
-                StatusTextBlock.Text = Messages.RegistrationCorrect();
-                await Task.Delay(3000);
-                this.Frame.Navigate(typeof(MainPage));
+                try
+                {
+                    DbConnections.Register(name, user, pass, confirmPass);
+                    StatusTextBlock.Text = Messages.RegistrationCorrect();
+                    await Task.Delay(3000);
+                    this.Frame.Navigate(typeof(MainPage));
+                }
+                catch (MySqlException)
+                {
+                    StatusTextBlock.Text = Messages.ConnectionError();
+                }
+               
             }
         }
 

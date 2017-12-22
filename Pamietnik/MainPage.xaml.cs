@@ -12,9 +12,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using MySql.Data.MySqlClient;
 
 namespace Pamietnik
-{ 
+{
     public sealed partial class MainPage : Page
     {
         #region Zmienne
@@ -45,16 +46,24 @@ namespace Pamietnik
                 return;
             }
 
-            bool loginSuccessful = DbConnections.DataValidation(user, pass);
+            try
+            {
+                bool loginSuccessful = DbConnections.DataValidation(user, pass);
 
-            if (loginSuccessful)
-            {
-                this.Frame.Navigate(typeof(Diary));
+                if (loginSuccessful)
+                {
+                    this.Frame.Navigate(typeof(Diary));
+                }
+                else
+                {
+                    StatusTextBlock.Text = Messages.LoginError();
+                }
             }
-            else
+            catch (MySqlException)
             {
-                StatusTextBlock.Text = Messages.LoginError();
+                StatusTextBlock.Text = Messages.ConnectionError();
             }
+
         }
 
         // Przejście do rejestracji

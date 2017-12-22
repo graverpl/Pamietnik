@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using MySql.Data.MySqlClient;
 
 namespace Pamietnik
 {
@@ -49,11 +50,25 @@ namespace Pamietnik
 
             // Wyświetlenie imienia
 
-            WelcomeTextBlock.Text = "Witaj " + DbConnections.GetName(MainPage.user) + "!";
+            try
+            {
+                WelcomeTextBlock.Text = "Witaj " + DbConnections.GetName(MainPage.user) + "!";
+            }
+            catch (MySqlException)
+            {
+                WelcomeTextBlock.Text = "Witaj!";
+            }
 
             // Wyświetlenie dowcipu
 
-            JokeTextBlock.Text = DbConnections.GetJoke();
+            try
+            {
+                JokeTextBlock.Text = DbConnections.GetJoke();
+            }
+            catch (MySqlException)
+            {
+                JokeTextBlock.Text = "";
+            }
 
             // Wpisy w pamiętniku
 
