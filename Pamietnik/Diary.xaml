@@ -13,6 +13,7 @@
         </Grid.Background>
 
         <!-- Określenie kolumn -->
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="200"/>
             <ColumnDefinition Width="Auto"/>
@@ -20,18 +21,22 @@
         </Grid.ColumnDefinitions>
 
         <!-- Określenie wierszy -->
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Belka z menu -->
+        
         <CommandBar Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
-            <AppBarButton x:Name="AddNewEntryBtn" Icon="Add" ToolTipService.ToolTip="Nowy wpis"/>
+            <AppBarButton x:Name="AddNewEntryBtn" Icon="Add" ToolTipService.ToolTip="Nowy wpis" Label="Nowy wpis" Click="AddNewEntryBtn_Click"/>
+            <AppBarButton x:Name="SaveNewEntryBtn" Icon="Save" ToolTipService.ToolTip="Zapisz" Label="Zapisz" Click="SaveNewEntryBtn_Click"/>
         </CommandBar>
 
-        <!-- Powitanie -->
+        <!-- Sekcja powitalna -->
+        
         <StackPanel Grid.Column="0" Grid.Row="1" >
             <TextBlock x:Name="WelcomeTextBlock" HorizontalAlignment="Left" Margin="20,20,0,0" FontSize="24"/>
             <TextBlock x:Name="DateTextBlock" HorizontalAlignment="Left" Margin="20,20,0,0"/>
@@ -40,23 +45,29 @@
                 <Span TextDecorations="Underline"> Dowcip na dziś:</Span>
             </TextBlock>
             <TextBlock x:Name="JokeTextBlock" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="20,20,0,0" FontStyle="Italic"/>
-            <Image Source="Images/smile.png" Height="50" HorizontalAlignment="Center" Margin="20,30,0,0"/>
+            <Image Source="Images/smile.png" Height="50" HorizontalAlignment="Center" Margin="20,20,0,0"/>
         </StackPanel>
+        
         <!-- Widok kalendarza -->
+        
         <CalendarView Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="#FFFFFF" RequestedTheme="Dark" Opacity="0.5"/>
 
         <!-- Lista wszystkich wpisów -->
+        
         <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Text="Ostatnie wpisy:"  VerticalAlignment="Top" Margin="10,50,0,0"/>
         <ListView x:Name="entriesListView" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="300" Margin="0,75,0,0"/>
 
         <!-- Zakładki -->
-        <Pivot x:Name="mainPivot" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
-            <PivotItem Header="Wpis 1">
-
+        
+        <Pivot x:Name="mainPivot" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" GotFocus="mainPivot_GotFocus">
+            <PivotItem Header="Wpis 1" Loaded="PivotItem_Loaded">
+                
                 <!-- Treść wpisu -->
-                <RichEditBox x:Name="mainBox" Grid.Column="0" Grid.Row="2"  Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="-833,821,833,-820.667"/>
-
+                
+                <RichEditBox x:Name="mainBox" Grid.Column="0" Grid.Row="2"  Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
             </PivotItem>
+            
+            
         </Pivot>
 
 

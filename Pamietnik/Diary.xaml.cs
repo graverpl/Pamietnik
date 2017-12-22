@@ -13,11 +13,15 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using MySql.Data.MySqlClient;
+using Windows.UI.Text;
 
 namespace Pamietnik
 {
     public sealed partial class Diary : Page
     {
+        private RichEditBox currentRichEditBox;
+        private static string author, date, entry;
+
         #region Zmienne
 
         private string countdown;
@@ -77,9 +81,61 @@ namespace Pamietnik
             entriesListView.Items.Add("Wpis 4");
             entriesListView.Items.Add("Wpis 5");
             entriesListView.Items.Add("Wpis 6");
+            entriesListView.Items.Add("Wpis 6");
+            entriesListView.Items.Add("Wpis 6");
+            entriesListView.Items.Add("Wpis 6");
+            entriesListView.Items.Add("Wpis 6");
+            entriesListView.Items.Add("Wpis 6");
 
         }
 
         #endregion
+
+        private void AddNewEntryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            PivotItem pi = new PivotItem();
+            var entryText = String.Format("Wpis {0}", mainPivot.Items.Count + 1);
+            pi.Header = entryText;
+            RichEditBox reb = new RichEditBox();
+            reb.HorizontalAlignment = HorizontalAlignment.Stretch;
+            reb.VerticalAlignment = VerticalAlignment.Stretch;
+            pi.Content = reb;
+            pi.Loaded += PivotItem_Loaded;
+            mainPivot.Items.Add(pi);
+            mainPivot.SelectedIndex = mainPivot.Items.Count - 1;
+        }
+
+        private void SaveNewEntryBtn_Click(object sender, RoutedEventArgs e)
+        {  
+            currentRichEditBox.Document.GetText(TextGetOptions.None, out string entryText);
+            entry = entryText;
+            author = MainPage.user;
+            try
+            {
+                DbConnections.SaveEntry(entryText, author);
+            }
+            catch (MySqlException) {}
+            
+        }
+
+        private void mainPivot_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Pivot p = sender as Pivot;
+            PivotItem pi = p.SelectedItem as PivotItem;
+            RichEditBox_SetFocus(pi);
+        }
+
+        private void PivotItem_Loaded(System.Object sender, RoutedEventArgs e)
+        {
+            PivotItem pi = sender as PivotItem;
+            RichEditBox_SetFocus(pi);
+        }
+
+        private void RichEditBox_SetFocus(PivotItem pi)
+        {
+            RichEditBox reb = pi.Content as RichEditBox;
+            reb.Focus(FocusState.Keyboard);
+            currentRichEditBox = reb;
+        }
     }
 }

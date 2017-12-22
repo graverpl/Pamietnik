@@ -87,6 +87,21 @@ namespace Pamietnik
             }
         }
 
+        // Zapisywanie wpisu w bazie
+
+        public static void SaveEntry(string author, string entry)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            using (MySqlCommand cmd = new MySqlCommand("INSERT INTO entries " + "(Author, Entry) " +
+                "VALUES " + "(@author, @entry);", conn))
+            {
+                cmd.Connection.Open();
+                cmd.Parameters.AddWithValue("@author", author);
+                cmd.Parameters.AddWithValue("@entry", entry);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
         #endregion
     }
 }
