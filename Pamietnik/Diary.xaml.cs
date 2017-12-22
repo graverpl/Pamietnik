@@ -112,10 +112,9 @@ namespace Pamietnik
             author = MainPage.user;
             try
             {
-                DbConnections.SaveEntry(entryText, author);
+                DbConnections.SaveEntry(author, entryText);
             }
             catch (MySqlException) {}
-            
         }
 
         private void mainPivot_GotFocus(object sender, RoutedEventArgs e)
@@ -129,6 +128,16 @@ namespace Pamietnik
         {
             PivotItem pi = sender as PivotItem;
             RichEditBox_SetFocus(pi);
+            try
+            {
+                currentRichEditBox.Document.SetText(TextSetOptions.None, DbConnections.ShowEntry(MainPage.user));
+            }
+            catch (ArgumentNullException)
+
+            {
+                currentRichEditBox.Document.SetText(TextSetOptions.None, "Spokojnie, nikt nie patrzy. Możesz coś napisać...");
+            }
+            
         }
 
         private void RichEditBox_SetFocus(PivotItem pi)
@@ -136,6 +145,7 @@ namespace Pamietnik
             RichEditBox reb = pi.Content as RichEditBox;
             reb.Focus(FocusState.Keyboard);
             currentRichEditBox = reb;
+            
         }
     }
 }

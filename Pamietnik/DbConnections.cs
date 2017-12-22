@@ -11,7 +11,7 @@ namespace Pamietnik
         #region Zmienne
 
         const string connString = "server=karolczak.atthost24.pl;user id=4263_diary;pwd=Karol123!;persistsecurityinfo=True;database=4263_diary";
-        private static string name, joke;
+        private static string name, joke, showEntry;
 
         #endregion
 
@@ -100,6 +100,25 @@ namespace Pamietnik
                 cmd.Parameters.AddWithValue("@entry", entry);
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        // Odczytywanie wpisu z bazy
+
+        public static string ShowEntry(string author)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            using (MySqlCommand cmd = new MySqlCommand("SELECT " + "Entry " + "FROM entries " + "WHERE Author=@author;",conn))
+            {
+                cmd.Connection.Open();
+                cmd.Parameters.AddWithValue("@author", author);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    showEntry = reader.GetString("Entry");
+                }
+            }
+            return showEntry;
         }
 
         #endregion
