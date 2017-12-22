@@ -57,7 +57,6 @@ namespace Pamietnik
 
         public static string GetJoke()
         {
-
             using (MySqlConnection conn = new MySqlConnection(connString))
             using (MySqlCommand cmd = new MySqlCommand("SELECT " + "Joke " + "FROM jokes " + "ORDER BY RAND()" + "LIMIT 1;", conn))
             {
@@ -70,7 +69,6 @@ namespace Pamietnik
                 }
             }
             return joke;
-
         }
 
         // Wysyłanie danych rejestracyjnych

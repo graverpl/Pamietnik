@@ -120,6 +120,7 @@
     <Content Include="Images\padlock.png" />
     <Content Include="Images\plain_bg.png" />
     <Content Include="Images\signup.png" />
+    <Content Include="Images\smile.png" />
     <Content Include="Images\users.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />

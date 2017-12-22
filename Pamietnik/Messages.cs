@@ -33,5 +33,10 @@ namespace Pamietnik
             return "Błąd połączenia z bazą danych" + "\nProszę spróbować za chwilę...";
         }
 
+        public static string UserExists()
+        {
+            return "Użytkownik już istnieje." + "\nZaloguj się lub spróbuj innej nazwy...";
+        }
+
     }
 }

@@ -63,8 +63,7 @@ namespace Pamietnik
                 catch (MySqlException)
                 {
                     StatusTextBlock.Text = Messages.ConnectionError();
-                }
-               
+                }       
             }
         }
 
