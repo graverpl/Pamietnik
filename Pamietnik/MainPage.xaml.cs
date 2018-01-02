@@ -35,6 +35,8 @@ namespace Pamietnik
 
         #region Program
 
+        // Weryfikacja danych i logowanie
+
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
             user = UserTextBox.Text;

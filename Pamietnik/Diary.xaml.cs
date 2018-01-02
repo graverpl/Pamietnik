@@ -73,23 +73,11 @@ namespace Pamietnik
             {
                 JokeTextBlock.Text = "";
             }
-
-            // Wpisy w pamiętniku
-
-            entriesListView.Items.Add("Wpis 2");
-            entriesListView.Items.Add("Wpis 3");
-            entriesListView.Items.Add("Wpis 4");
-            entriesListView.Items.Add("Wpis 5");
-            entriesListView.Items.Add("Wpis 6");
-            entriesListView.Items.Add("Wpis 6");
-            entriesListView.Items.Add("Wpis 6");
-            entriesListView.Items.Add("Wpis 6");
-            entriesListView.Items.Add("Wpis 6");
-            entriesListView.Items.Add("Wpis 6");
-
         }
 
         #endregion
+
+        // Dodawanie nowego pola dla wpisu
 
         private void AddNewEntryBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -105,8 +93,10 @@ namespace Pamietnik
             mainPivot.SelectedIndex = mainPivot.Items.Count - 1;
         }
 
+        // Zapisywanie wpisu w bazie
+
         private void SaveNewEntryBtn_Click(object sender, RoutedEventArgs e)
-        {  
+        {
             currentRichEditBox.Document.GetText(TextGetOptions.None, out string entryText);
             entry = entryText;
             author = MainPage.user;
@@ -114,8 +104,10 @@ namespace Pamietnik
             {
                 DbConnections.SaveEntry(author, entryText);
             }
-            catch (MySqlException) {}
+            catch (MySqlException) { }
         }
+
+        // Ustawianie aktywnego pola
 
         private void mainPivot_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -123,6 +115,15 @@ namespace Pamietnik
             PivotItem pi = p.SelectedItem as PivotItem;
             RichEditBox_SetFocus(pi);
         }
+
+        private void RichEditBox_SetFocus(PivotItem pi)
+        {
+            RichEditBox reb = pi.Content as RichEditBox;
+            reb.Focus(FocusState.Keyboard);
+            currentRichEditBox = reb;
+        }
+
+        // Ładowanie zakładek
 
         private void PivotItem_Loaded(System.Object sender, RoutedEventArgs e)
         {
@@ -137,15 +138,8 @@ namespace Pamietnik
             {
                 currentRichEditBox.Document.SetText(TextSetOptions.None, "Spokojnie, nikt nie patrzy. Możesz coś napisać...");
             }
-            
         }
 
-        private void RichEditBox_SetFocus(PivotItem pi)
-        {
-            RichEditBox reb = pi.Content as RichEditBox;
-            reb.Focus(FocusState.Keyboard);
-            currentRichEditBox = reb;
-            
-        }
+        
     }
 }
