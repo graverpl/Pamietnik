@@ -11,7 +11,7 @@ namespace Pamietnik
         #region Zmienne
 
         const string connString = "server=karolczak.atthost24.pl;user id=4263_diary;pwd=Karol123!;persistsecurityinfo=True;database=4263_diary";
-        private static string name, joke, showEntry;
+        internal protected static string user, pass, confirmPass, name, author, entry, joke;
 
         #endregion
 
@@ -19,7 +19,7 @@ namespace Pamietnik
 
         // Sprawdzanie poprawności danych logowania
 
-        public static bool DataValidation(string user, string pass)
+        internal static bool DataValidation(string user, string pass)
         {
             using (MySqlConnection conn = new MySqlConnection(connString))
             using (MySqlCommand cmd = new MySqlCommand("SELECT " + "Username, Password " + "FROM users " + "WHERE Username=@user AND Password=@pass;", conn))
@@ -35,7 +35,7 @@ namespace Pamietnik
 
         // Pobieranie imienia użytkownika
 
-        public static string GetName(string user)
+        internal static string GetName(string user)
         {
             using (MySqlConnection conn = new MySqlConnection(connString))
             using (MySqlCommand cmd = new MySqlCommand("SELECT " + "Name " + "FROM users " + "WHERE Username=@user;", conn))
@@ -47,15 +47,13 @@ namespace Pamietnik
                 {
                     name = reader.GetString("Name");
                 }
-
                 return name;
-
             }
         }
 
         // Pobieranie losowego dowcipu
 
-        public static string GetJoke()
+        internal static string GetJoke()
         {
             using (MySqlConnection conn = new MySqlConnection(connString))
             using (MySqlCommand cmd = new MySqlCommand("SELECT " + "Joke " + "FROM jokes " + "ORDER BY RAND()" + "LIMIT 1;", conn))
@@ -73,7 +71,7 @@ namespace Pamietnik
 
         // Wysyłanie danych rejestracyjnych
 
-        public static void Register(string name, string user, string pass, string confirmPass)
+        internal static void Register(string name, string user, string pass, string confirmPass)
         {
             using (MySqlConnection conn = new MySqlConnection(connString))
             using (MySqlCommand cmd = new MySqlCommand("INSERT INTO users " + "(Username, Password, Name) " +
@@ -87,9 +85,9 @@ namespace Pamietnik
             }
         }
 
-        // Zapisywanie wpisu w bazie
+        // Dodawanie wpisu
 
-        public static void SaveEntry(string author, string entry, string date)
+        internal static void SaveEntry(string author, string entry, string date)
         {
             using (MySqlConnection conn = new MySqlConnection(connString))
             using (MySqlCommand cmd = new MySqlCommand("INSERT INTO entries " + "(Author, Entry, EntryDate) " +
@@ -103,23 +101,28 @@ namespace Pamietnik
             }
         }
 
-        // Odczytywanie wpisu z bazy
+        // Odczytywanie wpisu
 
-        public static string ShowEntry(string author)
+        internal static string ShowEntry(string author, string date)
         {
             using (MySqlConnection conn = new MySqlConnection(connString))
-            using (MySqlCommand cmd = new MySqlCommand("SELECT " + "Entry " + "FROM entries " + "WHERE Author=@author;",conn))
+            using (MySqlCommand cmd = new MySqlCommand("SELECT " + "Entry " + "FROM entries " + "WHERE Author=@author AND EntryDate=@date;",conn))
             {
                 cmd.Connection.Open();
                 cmd.Parameters.AddWithValue("@author", author);
+                cmd.Parameters.AddWithValue("@date", date);
                 MySqlDataReader reader = cmd.ExecuteReader();
 
                 if (reader.Read())
                 {
-                    showEntry = reader.GetString("Entry");
+                    entry = reader.GetString("Entry");
+                }
+                else
+                {
+                    entry = "Brak wpisów tego dnia...";
                 }
             }
-            return showEntry;
+            return entry;
         }
 
         #endregion

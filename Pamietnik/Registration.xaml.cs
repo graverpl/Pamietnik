@@ -1,30 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 
 namespace Pamietnik
 {
-    public sealed partial class Registration : Page
+    internal sealed partial class Registration : Page
     {
-        #region Zmienne
-
-        private static string name, user, pass, confirmPass;
-
-        #endregion
-
         #region Konstruktor
 
         public Registration()
@@ -36,14 +22,16 @@ namespace Pamietnik
 
         #region Program
 
+        // Formularz rejestracji
+
         private async void SignUpBtn_Click(object sender, RoutedEventArgs e)
         {
-            name = NameTextBox.Text;
-            user = UserTextBox.Text;
-            pass = PassBox.Password;
-            confirmPass = ConfirmPassBox.Password;
+            DbConnections.name = NameTextBox.Text;
+            DbConnections.user = UserTextBox.Text;
+            DbConnections.pass = PassBox.Password;
+            DbConnections.confirmPass = ConfirmPassBox.Password;
 
-            if (user == "" || pass == "" || name == "" || confirmPass == "")
+            if (DbConnections.user == "" || DbConnections.pass == "" || DbConnections.name == "" || DbConnections.confirmPass == "")
             {
                 StatusTextBlock.Text = Messages.MandatoryFields();
             }
@@ -55,7 +43,7 @@ namespace Pamietnik
             {
                 try
                 {
-                    DbConnections.Register(name, user, pass, confirmPass);
+                    DbConnections.Register(NameTextBox.Text, UserTextBox.Text, PassBox.Password, ConfirmPassBox.Password);
                     StatusTextBlock.Text = Messages.RegistrationCorrect();
                     await Task.Delay(3000);
                     this.Frame.Navigate(typeof(MainPage));

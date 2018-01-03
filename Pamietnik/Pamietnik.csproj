@@ -98,7 +98,6 @@
     <Compile Include="Diary.xaml.cs">
       <DependentUpon>Diary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DiaryEntries.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

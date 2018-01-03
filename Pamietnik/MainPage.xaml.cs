@@ -1,29 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using MySql.Data.MySqlClient;
 
 namespace Pamietnik
 {
-    public sealed partial class MainPage : Page
+    internal sealed partial class MainPage : Page
     {
-        #region Zmienne
-
-        internal static string user, pass;
-
-        #endregion
-
         #region Konstruktor
 
         public MainPage()
@@ -39,10 +23,10 @@ namespace Pamietnik
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            user = UserTextBox.Text;
-            pass = PassBox.Password;
+            DbConnections.user = UserTextBox.Text;
+            DbConnections.pass = PassBox.Password;
 
-            if (user == "" || pass == "")
+            if (DbConnections.user == "" || DbConnections.pass == "")
             {
                 StatusTextBlock.Text = Messages.MandatoryFields();
                 return;
@@ -50,7 +34,7 @@ namespace Pamietnik
 
             try
             {
-                bool loginSuccessful = DbConnections.DataValidation(user, pass);
+                bool loginSuccessful = DbConnections.DataValidation(UserTextBox.Text, PassBox.Password);
 
                 if (loginSuccessful)
                 {
