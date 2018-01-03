@@ -50,7 +50,7 @@
         
         <!-- Widok kalendarza -->
         
-        <CalendarView Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="#FFFFFF" RequestedTheme="Dark" Opacity="0.5"/>
+        <CalendarView x:Name="MainCalendar" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="#FFFFFF" RequestedTheme="Dark" Opacity="0.5" SelectedDatesChanged="MainCalendar_SelectedDatesChanged" Loaded="MainCalendar_Loaded"/>
 
         <!-- Lista wszystkich wpisów -->
         

@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using MySql.Data.MySqlClient;
 using Windows.UI.Text;
+using System.Web;
 
 namespace Pamietnik
 {
@@ -75,7 +76,12 @@ namespace Pamietnik
             }
         }
 
-        #endregion
+        // Wczytywanie wpisów po dacie
+
+        private void LoadEntriesByDate()
+        {
+            entriesListView.Items.Add(MainCalendar.SelectedDates[0].ToString("dd/MM/yyyy (ddd)"));
+        }
 
         // Dodawanie nowego pola dla wpisu
 
@@ -100,9 +106,11 @@ namespace Pamietnik
             currentRichEditBox.Document.GetText(TextGetOptions.None, out string entryText);
             entry = entryText;
             author = MainPage.user;
+            date = MainCalendar.SelectedDates[0].ToString("yyyy-MM-dd");
+
             try
             {
-                DbConnections.SaveEntry(author, entryText);
+                DbConnections.SaveEntry(author, entryText, date);
             }
             catch (MySqlException) { }
         }
@@ -114,6 +122,16 @@ namespace Pamietnik
             Pivot p = sender as Pivot;
             PivotItem pi = p.SelectedItem as PivotItem;
             RichEditBox_SetFocus(pi);
+        }
+
+        private void MainCalendar_SelectedDatesChanged(CalendarView sender, CalendarViewSelectedDatesChangedEventArgs args)
+        {
+            LoadEntriesByDate();
+        }
+
+        private void MainCalendar_Loaded(object sender, RoutedEventArgs e)
+        {
+            MainCalendar.SelectedDates.Add(DateTime.Now);
         }
 
         private void RichEditBox_SetFocus(PivotItem pi)
@@ -129,17 +147,9 @@ namespace Pamietnik
         {
             PivotItem pi = sender as PivotItem;
             RichEditBox_SetFocus(pi);
-            try
-            {
-                currentRichEditBox.Document.SetText(TextSetOptions.None, DbConnections.ShowEntry(MainPage.user));
-            }
-            catch (ArgumentNullException)
-
-            {
-                currentRichEditBox.Document.SetText(TextSetOptions.None, "Spokojnie, nikt nie patrzy. Możesz coś napisać...");
-            }
+            
         }
 
-        
+        #endregion
     }
 }

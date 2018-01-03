@@ -89,15 +89,16 @@ namespace Pamietnik
 
         // Zapisywanie wpisu w bazie
 
-        public static void SaveEntry(string author, string entry)
+        public static void SaveEntry(string author, string entry, string date)
         {
             using (MySqlConnection conn = new MySqlConnection(connString))
-            using (MySqlCommand cmd = new MySqlCommand("INSERT INTO entries " + "(Author, Entry) " +
-                "VALUES " + "(@author, @entry);", conn))
+            using (MySqlCommand cmd = new MySqlCommand("INSERT INTO entries " + "(Author, Entry, EntryDate) " +
+                "VALUES " + "(@author, @entry, @date);", conn))
             {
                 cmd.Connection.Open();
                 cmd.Parameters.AddWithValue("@author", author);
                 cmd.Parameters.AddWithValue("@entry", entry);
+                cmd.Parameters.AddWithValue("@date", date);
                 cmd.ExecuteNonQuery();
             }
         }
