@@ -11,7 +11,7 @@ namespace Pamietnik
         #region Zmienne
 
         const string connString = "server=karolczak.atthost24.pl;user id=4263_diary;pwd=Karol123!;persistsecurityinfo=True;database=4263_diary";
-        internal protected static string user, pass, confirmPass, name, author, entry, joke;
+        internal protected static string user, pass, confirmPass, author, name, entry, joke;
 
         #endregion
 

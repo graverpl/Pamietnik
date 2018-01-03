@@ -12,8 +12,7 @@ namespace Pamietnik
         #region Zmienne
 
         private RichEditBox currentRichEditBox;
-        private string countdown;
-        private static string date;
+        private string countdown, date;
 
         #endregion
 
@@ -131,6 +130,7 @@ namespace Pamietnik
         {
             date = MainCalendar.SelectedDates[0].ToString("yyyy-MM-dd");
             entriesListView.Items.Add(MainCalendar.SelectedDates[0].ToString("yyyy-MM-dd (dddd)"));
+
             try
             {
                 mainBox.Document.SetText(TextSetOptions.None, DbConnections.ShowEntry(DbConnections.user, date));
