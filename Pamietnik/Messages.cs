@@ -37,5 +37,10 @@ namespace Pamietnik
         {
             return "Użytkownik już istnieje." + "\nZaloguj się lub spróbuj innej nazwy...";
         }
+
+        internal static string GeneralError()
+        {
+            return "Wystąpił nieokreślony błąd." + "\nProszę spróbować za chwilę...";
+        }
     }
 }

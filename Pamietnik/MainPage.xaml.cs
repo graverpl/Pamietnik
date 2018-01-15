@@ -23,33 +23,31 @@ namespace Pamietnik
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            DbConnections.user = UserTextBox.Text;
-            DbConnections.pass = PassBox.Password;
-
-            if (DbConnections.user == "" || DbConnections.pass == "")
-            {
-                StatusTextBlock.Text = Messages.MandatoryFields();
-                return;
-            }
-
             try
             {
-                bool loginSuccessful = DbConnections.DataValidation(UserTextBox.Text, PassBox.Password);
+                DbConnections.user = UserTextBox.Text;
+                DbConnections.pass = PassBox.Password;
 
-                if (loginSuccessful)
+                if (DbConnections.user == "" || DbConnections.pass == "")
                 {
-                    this.Frame.Navigate(typeof(Diary));
+                    StatusTextBlock.Text = Messages.MandatoryFields();
+                    return;
                 }
-                else
-                {
-                    StatusTextBlock.Text = Messages.LoginError();
-                }
+                    bool loginSuccessful = DbConnections.DataValidation(UserTextBox.Text, PassBox.Password);
+
+                    if (loginSuccessful)
+                    {
+                        this.Frame.Navigate(typeof(Diary));
+                    }
+                    else
+                    {
+                        StatusTextBlock.Text = Messages.LoginError();
+                    }
             }
             catch (MySqlException)
             {
                 StatusTextBlock.Text = Messages.ConnectionError();
             }
-
         }
 
         // Przejście do rejestracji

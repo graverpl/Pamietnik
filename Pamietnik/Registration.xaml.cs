@@ -26,32 +26,39 @@ namespace Pamietnik
 
         private async void SignUpBtn_Click(object sender, RoutedEventArgs e)
         {
-            DbConnections.name = NameTextBox.Text;
-            DbConnections.user = UserTextBox.Text;
-            DbConnections.pass = PassBox.Password;
-            DbConnections.confirmPass = ConfirmPassBox.Password;
+            try
+            {
+                DbConnections.name = NameTextBox.Text;
+                DbConnections.user = UserTextBox.Text;
+                DbConnections.pass = PassBox.Password;
+                DbConnections.confirmPass = ConfirmPassBox.Password;
 
-            if (DbConnections.user == "" || DbConnections.pass == "" || DbConnections.name == "" || DbConnections.confirmPass == "")
-            {
-                StatusTextBlock.Text = Messages.MandatoryFields();
-            }
-            else if (PassBox.Password != ConfirmPassBox.Password)
-            {
-                StatusTextBlock.Text = Messages.PassConfirmationError();
-            }
-            else
-            {
-                try
+                if (DbConnections.user == "" || DbConnections.pass == "" || DbConnections.name == "" || DbConnections.confirmPass == "")
                 {
-                    DbConnections.Register(NameTextBox.Text, UserTextBox.Text, PassBox.Password, ConfirmPassBox.Password);
-                    StatusTextBlock.Text = Messages.RegistrationCorrect();
-                    await Task.Delay(3000);
-                    this.Frame.Navigate(typeof(MainPage));
+                    StatusTextBlock.Text = Messages.MandatoryFields();
                 }
-                catch (MySqlException)
+                else if (PassBox.Password != ConfirmPassBox.Password)
                 {
-                    StatusTextBlock.Text = Messages.ConnectionError();
-                }       
+                    StatusTextBlock.Text = Messages.PassConfirmationError();
+                }
+                else
+                {
+                    try
+                    {
+                        DbConnections.Register(NameTextBox.Text, UserTextBox.Text, PassBox.Password, ConfirmPassBox.Password);
+                        StatusTextBlock.Text = Messages.RegistrationCorrect();
+                        await Task.Delay(3000);
+                        this.Frame.Navigate(typeof(MainPage));
+                    }
+                    catch (MySqlException)
+                    {
+                        StatusTextBlock.Text = Messages.ConnectionError();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                StatusTextBlock.Text = Messages.ConnectionError();
             }
         }
 

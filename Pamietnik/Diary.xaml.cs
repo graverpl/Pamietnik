@@ -31,14 +31,22 @@ namespace Pamietnik
         {
             // Data bieżąca i odliczanie
 
-            DateTime stopDate = DateTime.Parse("12/2/2018");
-            DateTime startDate = DateTime.Now;
+            try
+            {
+                DateTime stopDate = DateTime.Parse("12/2/2018");
+                DateTime startDate = DateTime.Now;
 
-            TimeSpan timeLeft = stopDate - startDate;
-            countdown = string.Format("Do ferii zimowych pozostało {0} dni.", timeLeft.Days);
+                TimeSpan timeLeft = stopDate - startDate;
+                countdown = string.Format("Do ferii zimowych pozostało {0} dni.", timeLeft.Days);
 
-            CountdownTextBlock.Text = countdown;
-            DateTextBlock.Text = "Dzisiaj mamy " + DateTime.Today.ToString("D") + " r.";
+                CountdownTextBlock.Text = countdown;
+                DateTextBlock.Text = "Dzisiaj mamy " + DateTime.Today.ToString("D") + " r.";
+            }
+            catch (Exception)
+            {
+                mainBox.Document.SetText(TextSetOptions.None, Messages.GeneralError());
+            }
+
 
             // Wyświetlenie imienia
 
@@ -63,42 +71,50 @@ namespace Pamietnik
             }
         }
 
-        // Dodawanie nowego pola dla wpisu
-
-        private void AddNewEntryBtn_Click(object sender, RoutedEventArgs e)
-        {
-            PivotItem pi = new PivotItem();
-            var entryText = String.Format("Wpis {0}", mainPivot.Items.Count + 1);
-            pi.Header = entryText;
-            RichEditBox reb = new RichEditBox();
-            reb.HorizontalAlignment = HorizontalAlignment.Stretch;
-            reb.VerticalAlignment = VerticalAlignment.Stretch;
-            pi.Content = reb;
-            pi.Loaded += PivotItem_Loaded;
-            mainPivot.Items.Add(pi);
-            mainPivot.SelectedIndex = mainPivot.Items.Count - 1;
-        }
-
         // Zapisywanie wpisu
 
         private void SaveNewEntryBtn_Click(object sender, RoutedEventArgs e)
         {
-            currentRichEditBox.Document.GetText(TextGetOptions.None, out string entryText);
-            DbConnections.entry = entryText;
-            DbConnections.author = DbConnections.user;
-
             try
             {
-                DbConnections.SaveEntry(DbConnections.user, entryText, date);
+                currentRichEditBox.Document.GetText(TextGetOptions.None, out string entryText);
+                DbConnections.entry = entryText;
+                DbConnections.author = DbConnections.user;
+
+                try
+                {
+                    DbConnections.SaveEntry(DbConnections.user, entryText, date);
+                }
+                catch (MySqlException)
+                {
+                    mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+                }
             }
             catch (MySqlException)
             {
                 mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
             }
+
+        }
+
+        // Usuwanie wpisu
+
+        private void DeleteEntryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                DbConnections.DeleteEntry(DbConnections.user, date);
+                DbConnections.ShowEntry(DbConnections.user, date);
+            }
+            catch (MySqlException)
+            {
+                mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+            }
+
         }
 
         // Ustawianie aktywnego pola
-        
+
         private void PivotItem_Loaded(System.Object sender, RoutedEventArgs e)
         {
             PivotItem pi = sender as PivotItem;
@@ -123,19 +139,31 @@ namespace Pamietnik
 
         private void MainCalendar_Loaded(object sender, RoutedEventArgs e)
         {
-            MainCalendar.SelectedDates.Add(DateTime.Now);
+            try
+            {
+                MainCalendar.SelectedDates.Add(DateTime.Now);
+            }
+            catch (Exception)
+            {
+                mainBox.Document.SetText(TextSetOptions.None, Messages.GeneralError());
+            }
+
         }
 
         private void MainCalendar_SelectedDatesChanged(CalendarView sender, CalendarViewSelectedDatesChangedEventArgs args)
         {
-            date = MainCalendar.SelectedDates[0].ToString("yyyy-MM-dd");
-            entriesListView.Items.Add(MainCalendar.SelectedDates[0].ToString("yyyy-MM-dd (dddd)"));
+            try
+            {
+                date = MainCalendar.SelectedDates[0].ToString("yyyy-MM-dd");
+                entriesListView.Items.Add(MainCalendar.SelectedDates[0].ToString("yyyy-MM-dd (dddd)"));
+            }
+            catch (System.Runtime.InteropServices.COMException) { }
 
             try
             {
                 mainBox.Document.SetText(TextSetOptions.None, DbConnections.ShowEntry(DbConnections.user, date));
             }
-            catch (ArgumentNullException)
+            catch (MySqlException)
 
             {
                 mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());

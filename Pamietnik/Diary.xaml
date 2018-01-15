@@ -31,7 +31,7 @@
         <!-- Belka z menu -->
         
         <CommandBar Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
-            <AppBarButton x:Name="AddNewEntryBtn" Icon="Add" ToolTipService.ToolTip="Nowy wpis" Label="Nowy wpis" Click="AddNewEntryBtn_Click"/>
+            <AppBarButton x:Name="DeleteEntryBtn" Icon="Delete" ToolTipService.ToolTip="Usuń wpis" Label="Usuń wpis" Click="DeleteEntryBtn_Click"/>
             <AppBarButton x:Name="SaveNewEntryBtn" Icon="Save" ToolTipService.ToolTip="Zapisz" Label="Zapisz" Click="SaveNewEntryBtn_Click"/>
         </CommandBar>
 
@@ -50,7 +50,7 @@
         
         <!-- Widok kalendarza -->
         
-        <CalendarView x:Name="MainCalendar" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="#FFFFFF" RequestedTheme="Dark" Opacity="0.5" SelectedDatesChanged="MainCalendar_SelectedDatesChanged" Loaded="MainCalendar_Loaded"/>
+        <CalendarView x:Name="MainCalendar" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,5,0,0" Height="291" Background="#FFFFFF" RequestedTheme="Dark" Opacity="0.5" SelectedDatesChanged="MainCalendar_SelectedDatesChanged" Loaded="MainCalendar_Loaded"/>
 
         <!-- Lista wszystkich wpisów -->
         
@@ -60,7 +60,7 @@
         <!-- Zakładki -->
 
         <Pivot x:Name="mainPivot" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" GotFocus="mainPivot_GotFocus">
-            <PivotItem Header="Wpis 1" Loaded="PivotItem_Loaded">
+            <PivotItem Loaded="PivotItem_Loaded">
 
                 <!-- Treść wpisu -->
 

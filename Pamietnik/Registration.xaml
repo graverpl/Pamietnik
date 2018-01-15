@@ -27,7 +27,7 @@
         </Grid.RowDefinitions>
 
         <!-- Topbar -->
-        <Rectangle Grid.ColumnSpan="3" Grid.Row="0" Fill="#FF939BA1"/>
+        <Rectangle x:Name="LoginBox" Grid.ColumnSpan="3" Grid.Row="0" Fill="#FF939BA1"/>
         <Image Source="Images/signup.png" Grid.ColumnSpan="3" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Height="30"/>
         <TextBlock Grid.ColumnSpan="3" Grid.Row="0" Text="Zarejestruj się" Foreground="White" VerticalAlignment="Center" Margin="50,8,0,10" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" FontStyle="Normal"/>
 
