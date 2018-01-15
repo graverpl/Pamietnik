@@ -31,8 +31,10 @@
         <!-- Belka z menu -->
         
         <CommandBar Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
-            <AppBarButton x:Name="DeleteEntryBtn" Icon="Delete" ToolTipService.ToolTip="Usuń wpis" Label="Usuń wpis" Click="DeleteEntryBtn_Click"/>
+            
             <AppBarButton x:Name="SaveNewEntryBtn" Icon="Save" ToolTipService.ToolTip="Zapisz" Label="Zapisz" Click="SaveNewEntryBtn_Click"/>
+            <AppBarButton x:Name="EditEntryBtn" Icon="Edit" ToolTipService.ToolTip="Edytuj wpis" Label="Edytuj wpis"/>
+            <AppBarButton x:Name="DeleteEntryBtn" Icon="Delete" ToolTipService.ToolTip="Usuń wpis" Label="Usuń wpis" Click="DeleteEntryBtn_Click"/>
         </CommandBar>
 
         <!-- Sekcja powitalna -->
