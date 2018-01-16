@@ -12,6 +12,7 @@ namespace Pamietnik
 
         const string connString = "server=karolczak.atthost24.pl;user id=4263_diary;pwd=Karol123!;persistsecurityinfo=True;database=4263_diary; charset=utf8";
         internal protected static string user, pass, confirmPass, author, name, entry, joke;
+        internal protected static int count;
 
         #endregion
 
@@ -32,9 +33,9 @@ namespace Pamietnik
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         return reader.Read();
-                    }      
+                    }
                 }
-            }   
+            }
         }
 
         // Pobieranie imienia użytkownika
@@ -55,9 +56,9 @@ namespace Pamietnik
                             name = reader.GetString("Name");
                         }
                         return name;
-                    }    
+                    }
                 }
-            }     
+            }
         }
 
         // Pobieranie losowego dowcipu
@@ -76,9 +77,9 @@ namespace Pamietnik
                             joke = reader.GetString("Joke");
                         }
                         return joke;
-                    }       
-                }   
-            }     
+                    }
+                }
+            }
         }
 
         // Rejestracja użytkownika
@@ -96,28 +97,56 @@ namespace Pamietnik
                     cmd.Parameters.AddWithValue("@name", name);
                     cmd.ExecuteNonQuery();
                 }
-            }    
+            }
         }
 
-        // Dodawanie wpisu
+        // Zapis lub edycja wpisu
 
-        internal static void SaveEntry(string author, string entry, string date)
+        internal static void SaveEntry(string author, string date, string entry)
         {
             using (MySqlConnection conn = new MySqlConnection(connString))
             {
                 conn.Open();
-                using (MySqlCommand cmd = new MySqlCommand("INSERT INTO entries " + "(Author, Entry, EntryDate) " +
-                "VALUES " + "(@author, @entry, @date);", conn))
+
+                // Sprawdzenie, czy wpis istnieje
+
+                using (MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) " + "FROM entries " + "WHERE Author=@author AND EntryDate=@date;", conn))
                 {
                     cmd.Parameters.AddWithValue("@author", author);
-                    cmd.Parameters.AddWithValue("@entry", entry);
                     cmd.Parameters.AddWithValue("@date", date);
                     cmd.ExecuteNonQuery();
+                    count = (int)(long)cmd.ExecuteScalar();
                 }
-            }     
+
+                // Edycja istniejącego wpisu
+
+                if (count > 0)
+                {
+                    using (MySqlCommand cmd = new MySqlCommand("UPDATE entries " + "SET Entry=@entry " + "WHERE Author=@author AND EntryDate=@date;", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@author", author);
+                        cmd.Parameters.AddWithValue("@date", date);
+                        cmd.Parameters.AddWithValue("@entry", entry);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                // Tworzenie nowego wpisu
+
+                else
+                {
+                    using (MySqlCommand cmd = new MySqlCommand("INSERT INTO entries " + "(Author, Entry, EntryDate) " + "VALUES " + "(@author, @entry, @date);", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@author", author);
+                        cmd.Parameters.AddWithValue("@entry", entry);
+                        cmd.Parameters.AddWithValue("@date", date);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
         }
 
-        // Odczytywanie wpisu
+        // Pobieranie wpisu
 
         internal static string ShowEntry(string author, string date)
         {
@@ -156,23 +185,6 @@ namespace Pamietnik
                 {
                     cmd.Parameters.AddWithValue("@author", author);
                     cmd.Parameters.AddWithValue("@date", date);
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        // Edycja wpisu
-
-        internal static void EditEntry(string author, string date, string entry)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connString))
-            {
-                conn.Open();
-                using (MySqlCommand cmd = new MySqlCommand("UPDATE entries " + "SET Entry=@entry " + "WHERE Author=@author AND EntryDate=@date;", conn))
-                {
-                    cmd.Parameters.AddWithValue("@author", author);
-                    cmd.Parameters.AddWithValue("@date", date);
-                    cmd.Parameters.AddWithValue("@entry", entry);
                     cmd.ExecuteNonQuery();
                 }
             }

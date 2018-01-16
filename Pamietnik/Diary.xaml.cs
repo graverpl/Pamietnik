@@ -129,7 +129,7 @@ namespace Pamietnik
 
         // Zapisywanie wpisu
 
-        private void SaveNewEntryBtn_Click(object sender, RoutedEventArgs e)
+        private void SaveEntryBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -139,7 +139,7 @@ namespace Pamietnik
 
                 try
                 {
-                    DbConnections.SaveEntry(DbConnections.user, entryText, date);
+                    DbConnections.SaveEntry(DbConnections.user, date, entryText);
                 }
                 catch (MySqlException)
                 {
@@ -171,26 +171,7 @@ namespace Pamietnik
 
         // Edycja wpisu
 
-        private void EditEntryBtn_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                currentRichEditBox.Document.GetText(TextGetOptions.None, out string entryText);
-
-                try
-                {
-                    DbConnections.EditEntry(DbConnections.user, date, entryText);
-                }
-                catch (MySqlException)
-                {
-                    mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
-                }
-            }
-            catch (MySqlException)
-            {
-                mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
-            }
-        }
+        
 
         // Wylogowanie
 
