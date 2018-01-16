@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using MySql.Data.MySqlClient;
@@ -150,32 +151,37 @@ namespace Pamietnik
             {
                 mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
             }
-
         }
 
         // Usuwanie wpisu
 
         private void DeleteEntryBtn_Click(object sender, RoutedEventArgs e)
         {
+            ConfirmationPopup.IsOpen = true;
+        }
+
+        private void YesBtn_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
                 DbConnections.DeleteEntry(DbConnections.user, date);
-                mainBox.Document.SetText(TextSetOptions.None, DbConnections.ShowEntry(DbConnections.user, date));
+                mainBox.Document.SetText(TextSetOptions.None, Messages.DeleteSuccess());
+                ConfirmationPopup.IsOpen = false;
             }
             catch (MySqlException)
             {
                 mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
             }
-
         }
 
-        // Edycja wpisu
-
-        
+        private void NoBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ConfirmationPopup.IsOpen = false;
+        }
 
         // Wylogowanie
 
-        private void LogoutEntryBtn_Click(object sender, RoutedEventArgs e)
+        private void LogoutBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MainPage));
         }

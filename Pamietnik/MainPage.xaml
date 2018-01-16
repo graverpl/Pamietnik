@@ -31,7 +31,7 @@
         <Image Source="Images/key.png" Grid.ColumnSpan="3" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Height="30"/>
         <TextBlock Grid.ColumnSpan="3" Grid.Row="0" Text="Zaloguj się" Foreground="White" VerticalAlignment="Center" Margin="45,8,0,10" FontFamily="Nirmala UI" FontSize="24" FontWeight="Normal" FontStyle="Normal"/>
 
-        <!-- Login form -->
+        <!-- Formularz logowania -->
         <Rectangle Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Fill="#FF939BA1" Width="280" RadiusX="7" RadiusY="7"/>
         <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image Source="Images/padlock.png" Height="70" HorizontalAlignment="Center"/>
