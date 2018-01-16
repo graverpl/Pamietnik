@@ -56,17 +56,15 @@
 
         <!-- Lista wszystkich wpisów -->
         
-        <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Text="Ostatnio przeglądane:"  VerticalAlignment="Top" Margin="10,50,0,0"/>
-        <ListView x:Name="entriesListView" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Margin="0,75,0,0"/>
+        <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Text="Ostatnio przeglądane:"  VerticalAlignment="Top" Margin="10,20,0,0"/>
+        <ListView x:Name="entriesListView" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Margin="0,60,0,0"/>
 
         <!-- Zakładki -->
 
         <Pivot x:Name="mainPivot" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" GotFocus="mainPivot_GotFocus">
             <PivotItem Loaded="PivotItem_Loaded">
-
                 <!-- Treść wpisu -->
-
-                <RichEditBox x:Name="mainBox" Grid.Column="0" Grid.Row="2"  Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
+                <RichEditBox x:Name="mainBox" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" PlaceholderText="Brak wpisów tego dnia..."/>
             </PivotItem>
         </Pivot>
         

@@ -130,7 +130,7 @@ namespace Pamietnik
                     cmd.Parameters.AddWithValue("@date", date);
                     cmd.ExecuteNonQuery();
                 }
-            }   
+            }
         }
 
         // Odczytywanie wpisu
@@ -153,7 +153,7 @@ namespace Pamietnik
                         }
                         else
                         {
-                            entry = "Brak wpisów tego dnia...";
+                            entry = "";
                         }
                         return entry;
                     }   

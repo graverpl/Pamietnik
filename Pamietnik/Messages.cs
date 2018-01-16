@@ -42,5 +42,10 @@ namespace Pamietnik
         {
             return "Wystąpił nieokreślony błąd." + "\nProszę spróbować za chwilę...";
         }
+
+        internal static string DeleteSuccess()
+        {
+            return "Wpis został pomyślnie usunięty.";
+        }
     }
 }

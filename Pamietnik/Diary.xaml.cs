@@ -104,16 +104,16 @@ namespace Pamietnik
             try
             {
                 DbConnections.DeleteEntry(DbConnections.user, date);
-                DbConnections.ShowEntry(DbConnections.user, date);
+                mainBox.Document.SetText(TextSetOptions.None, DbConnections.ShowEntry(DbConnections.user, date));
             }
             catch (MySqlException)
             {
-                mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+                mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());  
             }
 
         }
 
-        // Ustawianie aktywnego pola
+        // Ustawianie aktywnego boxu
 
         private void PivotItem_Loaded(System.Object sender, RoutedEventArgs e)
         {
@@ -131,8 +131,8 @@ namespace Pamietnik
         private void RichEditBox_SetFocus(PivotItem pi)
         {
             RichEditBox reb = pi.Content as RichEditBox;
-            reb.Focus(FocusState.Keyboard);
             currentRichEditBox = reb;
+            reb.Focus(FocusState.Keyboard);
         }
 
         // Obsługa kalendarza
@@ -164,7 +164,6 @@ namespace Pamietnik
                 mainBox.Document.SetText(TextSetOptions.None, DbConnections.ShowEntry(DbConnections.user, date));
             }
             catch (MySqlException)
-
             {
                 mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
             }
