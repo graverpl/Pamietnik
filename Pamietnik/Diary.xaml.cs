@@ -71,49 +71,7 @@ namespace Pamietnik
             }
         }
 
-        // Zapisywanie wpisu
-
-        private void SaveNewEntryBtn_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                currentRichEditBox.Document.GetText(TextGetOptions.None, out string entryText);
-                DbConnections.entry = entryText;
-                DbConnections.author = DbConnections.user;
-
-                try
-                {
-                    DbConnections.SaveEntry(DbConnections.user, entryText, date);
-                }
-                catch (MySqlException)
-                {
-                    mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
-                }
-            }
-            catch (MySqlException)
-            {
-                mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
-            }
-
-        }
-
-        // Usuwanie wpisu
-
-        private void DeleteEntryBtn_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                DbConnections.DeleteEntry(DbConnections.user, date);
-                mainBox.Document.SetText(TextSetOptions.None, DbConnections.ShowEntry(DbConnections.user, date));
-            }
-            catch (MySqlException)
-            {
-                mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());  
-            }
-
-        }
-
-        // Ustawianie aktywnego boxu
+        // Ustawianie aktywnego pola
 
         private void PivotItem_Loaded(System.Object sender, RoutedEventArgs e)
         {
@@ -167,6 +125,78 @@ namespace Pamietnik
             {
                 mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
             }
+        }
+
+        // Zapisywanie wpisu
+
+        private void SaveNewEntryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                currentRichEditBox.Document.GetText(TextGetOptions.None, out string entryText);
+                DbConnections.entry = entryText;
+                DbConnections.author = DbConnections.user;
+
+                try
+                {
+                    DbConnections.SaveEntry(DbConnections.user, entryText, date);
+                }
+                catch (MySqlException)
+                {
+                    mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+                }
+            }
+            catch (MySqlException)
+            {
+                mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+            }
+
+        }
+
+        // Usuwanie wpisu
+
+        private void DeleteEntryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                DbConnections.DeleteEntry(DbConnections.user, date);
+                mainBox.Document.SetText(TextSetOptions.None, DbConnections.ShowEntry(DbConnections.user, date));
+            }
+            catch (MySqlException)
+            {
+                mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+            }
+
+        }
+
+        // Edycja wpisu
+
+        private void EditEntryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                currentRichEditBox.Document.GetText(TextGetOptions.None, out string entryText);
+
+                try
+                {
+                    DbConnections.EditEntry(DbConnections.user, date, entryText);
+                }
+                catch (MySqlException)
+                {
+                    mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+                }
+            }
+            catch (MySqlException)
+            {
+                mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+            }
+        }
+
+        // Wylogowanie
+
+        private void LogoutEntryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
         }
 
         #endregion

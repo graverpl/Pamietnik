@@ -33,7 +33,8 @@
         <CommandBar Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
             
             <AppBarButton x:Name="SaveNewEntryBtn" Icon="Save" ToolTipService.ToolTip="Zapisz" Label="Zapisz" Click="SaveNewEntryBtn_Click"/>
-            <AppBarButton x:Name="EditEntryBtn" Icon="Edit" ToolTipService.ToolTip="Edytuj wpis" Label="Edytuj wpis"/>
+            <AppBarButton x:Name="EditEntryBtn" Icon="Edit" ToolTipService.ToolTip="Edytuj wpis" Label="Edytuj wpis" Click="EditEntryBtn_Click"/>
+            <AppBarButton x:Name="LogoutEntryBtn" Icon="OtherUser" ToolTipService.ToolTip="Wyloguj się" Label="Wyloguj się" Click="LogoutEntryBtn_Click"/>
             <AppBarButton x:Name="DeleteEntryBtn" Icon="Delete" ToolTipService.ToolTip="Usuń wpis" Label="Usuń wpis" Click="DeleteEntryBtn_Click"/>
         </CommandBar>
 
@@ -64,7 +65,7 @@
         <Pivot x:Name="mainPivot" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" GotFocus="mainPivot_GotFocus">
             <PivotItem Loaded="PivotItem_Loaded">
                 <!-- Treść wpisu -->
-                <RichEditBox x:Name="mainBox" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" PlaceholderText="Brak wpisów tego dnia..."/>
+                <RichEditBox x:Name="mainBox" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  Margin="0,0,0,10" VerticalAlignment="Stretch" PlaceholderText="Brak wpisów tego dnia..."/>
             </PivotItem>
         </Pivot>
         

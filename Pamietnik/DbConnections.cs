@@ -81,7 +81,7 @@ namespace Pamietnik
             }     
         }
 
-        // Wysyłanie danych rejestracyjnych
+        // Rejestracja użytkownika
 
         internal static void Register(string name, string user, string pass, string confirmPass)
         {
@@ -117,22 +117,6 @@ namespace Pamietnik
             }     
         }
 
-        // Usuwanie wpisu
-
-        internal static void DeleteEntry(string author, string date)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connString))
-            {
-                conn.Open();
-                using (MySqlCommand cmd = new MySqlCommand("DELETE FROM entries " + "WHERE Author=@author AND EntryDate=@date;", conn))
-                {
-                    cmd.Parameters.AddWithValue("@author", author);
-                    cmd.Parameters.AddWithValue("@date", date);
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
         // Odczytywanie wpisu
 
         internal static string ShowEntry(string author, string date)
@@ -156,9 +140,42 @@ namespace Pamietnik
                             entry = "";
                         }
                         return entry;
-                    }   
-                }  
-            }   
+                    }
+                }
+            }
+        }
+
+        // Usuwanie wpisu
+
+        internal static void DeleteEntry(string author, string date)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            {
+                conn.Open();
+                using (MySqlCommand cmd = new MySqlCommand("DELETE FROM entries " + "WHERE Author=@author AND EntryDate=@date;", conn))
+                {
+                    cmd.Parameters.AddWithValue("@author", author);
+                    cmd.Parameters.AddWithValue("@date", date);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Edycja wpisu
+
+        internal static void EditEntry(string author, string date, string entry)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            {
+                conn.Open();
+                using (MySqlCommand cmd = new MySqlCommand("UPDATE entries " + "SET Entry=@entry " + "WHERE Author=@author AND EntryDate=@date;", conn))
+                {
+                    cmd.Parameters.AddWithValue("@author", author);
+                    cmd.Parameters.AddWithValue("@date", date);
+                    cmd.Parameters.AddWithValue("@entry", entry);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         #endregion
