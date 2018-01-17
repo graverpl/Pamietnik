@@ -43,7 +43,7 @@ namespace Pamietnik
                 countdown = string.Format("Do ferii zimowych pozostało {0} dni.", timeLeft.Days);
 
                 CountdownTextBlock.Text = countdown;
-                DateTextBlock.Text = "Dzisiaj mamy " + DateTime.Today.ToString("D") + " r.";
+                DateTextBlock.Text = "Dzisiaj jest " + DateTime.Today.ToString("D") + " r.";
             }
             catch (Exception)
             {
@@ -71,6 +71,9 @@ namespace Pamietnik
             {
                 JokeTextBlock.Text = "";
             }
+
+            
+
         }
 
         // Ustawianie aktywnego pola
