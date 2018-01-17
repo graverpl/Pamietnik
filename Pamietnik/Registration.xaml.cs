@@ -64,7 +64,7 @@ namespace Pamietnik
 
         // Przejście do logowania
 
-        private void TextBlock_Tapped(object sender, TappedRoutedEventArgs e)
+        private void LoginFwdTextBlock_Tapped(object sender, TappedRoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MainPage));
         }

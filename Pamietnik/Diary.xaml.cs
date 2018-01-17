@@ -45,7 +45,7 @@ namespace Pamietnik
             }
             catch (Exception)
             {
-                mainBox.Document.SetText(TextSetOptions.None, Messages.GeneralError());
+                MainBox.Document.SetText(TextSetOptions.None, Messages.GeneralError());
             }
 
 
@@ -80,7 +80,7 @@ namespace Pamietnik
             RichEditBox_SetFocus(pi);
         }
 
-        private void mainPivot_GotFocus(object sender, RoutedEventArgs e)
+        private void MainPivot_GotFocus(object sender, RoutedEventArgs e)
         {
             Pivot p = sender as Pivot;
             PivotItem pi = p.SelectedItem as PivotItem;
@@ -104,9 +104,8 @@ namespace Pamietnik
             }
             catch (Exception)
             {
-                mainBox.Document.SetText(TextSetOptions.None, Messages.GeneralError());
+                MainBox.Document.SetText(TextSetOptions.None, Messages.GeneralError());
             }
-
         }
 
         private void MainCalendar_SelectedDatesChanged(CalendarView sender, CalendarViewSelectedDatesChangedEventArgs args)
@@ -114,17 +113,17 @@ namespace Pamietnik
             try
             {
                 date = MainCalendar.SelectedDates[0].ToString("yyyy-MM-dd");
-                entriesListView.Items.Add(MainCalendar.SelectedDates[0].ToString("yyyy-MM-dd (dddd)"));
+                EntriesListView.Items.Add(MainCalendar.SelectedDates[0].ToString("yyyy-MM-dd (dddd)"));
             }
             catch (System.Runtime.InteropServices.COMException) { }
 
             try
             {
-                mainBox.Document.SetText(TextSetOptions.None, DbConnections.ShowEntry(DbConnections.user, date));
+                MainBox.Document.SetText(TextSetOptions.None, DbConnections.ShowEntry(DbConnections.user, date));
             }
             catch (MySqlException)
             {
-                mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+                MainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
             }
         }
 
@@ -144,12 +143,12 @@ namespace Pamietnik
                 }
                 catch (MySqlException)
                 {
-                    mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+                    MainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
                 }
             }
             catch (MySqlException)
             {
-                mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+                MainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
             }
         }
 
@@ -157,26 +156,26 @@ namespace Pamietnik
 
         private void DeleteEntryBtn_Click(object sender, RoutedEventArgs e)
         {
-            ConfirmationPopup.IsOpen = true;
+            DeletePopup.IsOpen = true;
         }
 
-        private void YesBtn_Click(object sender, RoutedEventArgs e)
+        private void DeleteYesBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 DbConnections.DeleteEntry(DbConnections.user, date);
-                mainBox.Document.SetText(TextSetOptions.None, Messages.DeleteSuccess());
-                ConfirmationPopup.IsOpen = false;
+                MainBox.Document.SetText(TextSetOptions.None, Messages.DeleteSuccess());
+                DeletePopup.IsOpen = false;
             }
             catch (MySqlException)
             {
-                mainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+                MainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
             }
         }
 
-        private void NoBtn_Click(object sender, RoutedEventArgs e)
+        private void DeleteNoBtn_Click(object sender, RoutedEventArgs e)
         {
-            ConfirmationPopup.IsOpen = false;
+            DeletePopup.IsOpen = false;
         }
 
         // Wylogowanie

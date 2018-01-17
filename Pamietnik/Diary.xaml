@@ -5,14 +5,17 @@
     xmlns:local="using:Pamietnik"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Loaded="Page_Loaded" FontFamily="Segoe UI" FontSize="16" Foreground="White">
+    mc:Ignorable="d" FontFamily="Segoe UI" FontSize="16" Foreground="White" Loaded="Page_Loaded">
 
-    <Grid>
+    <Grid x:Name="DiaryMainGrid">
+        
+        <!-- Tło -->
+        
         <Grid.Background>
             <ImageBrush ImageSource="Images/plain_bg.png" Stretch="Fill"/>
         </Grid.Background>
 
-        <!-- Określenie kolumn -->
+        <!-- Definicje kolumn -->
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="200"/>
@@ -20,7 +23,7 @@
             <ColumnDefinition MinWidth="300"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Określenie wierszy -->
+        <!-- Definicje wierszy -->
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -28,9 +31,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Belka z menu -->
+        <!-- Menu -->
 
-        <CommandBar Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" OverflowButtonVisibility="Collapsed">
+        <CommandBar Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Background="#FF939BA1" OverflowButtonVisibility="Collapsed">
             <AppBarButton x:Name="SaveEntryBtn" Icon="Save" ToolTipService.ToolTip="Zapisz/Edytuj" Click="SaveEntryBtn_Click"/>
             <AppBarButton x:Name="DeleteEntryBtn" Icon="Delete" ToolTipService.ToolTip="Usuń wpis" Click="DeleteEntryBtn_Click"/>
             <AppBarButton x:Name="LogoutBtn" Icon="OtherUser" ToolTipService.ToolTip="Wyloguj się" Click="LogoutBtn_Click"/>
@@ -42,38 +45,37 @@
             <TextBlock x:Name="WelcomeTextBlock" HorizontalAlignment="Left" Margin="20,25,0,0" FontSize="24"/>
             <TextBlock x:Name="DateTextBlock" HorizontalAlignment="Left" Margin="20,20,0,0"/>
             <TextBlock x:Name="CountdownTextBlock" HorizontalAlignment="Left" Margin="20,0,0,0"/>
-            <TextBlock HorizontalAlignment="Left" Margin="20,20,0,0">
+            <TextBlock x:Name="JokeTextBlockHeader" HorizontalAlignment="Left" Margin="20,20,0,0">
                 <Span TextDecorations="Underline"> Dowcip na dziś:</Span>
             </TextBlock>
-            <TextBlock x:Name="JokeTextBlock" TextWrapping="Wrap" HorizontalAlignment="Left" Margin="20,20,0,0" FontStyle="Italic"/>
-            
+            <TextBlock x:Name="JokeTextBlock" HorizontalAlignment="Left" Margin="20,20,0,0" FontStyle="Italic" TextWrapping="Wrap"/>
         </StackPanel>
 
         <!-- Widok kalendarza -->
 
-        <CalendarView x:Name="MainCalendar" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,10,0,0" Height="291" Background="#FFFFFF" RequestedTheme="Dark" Opacity="0.5" SelectedDatesChanged="MainCalendar_SelectedDatesChanged" Loaded="MainCalendar_Loaded"/>
+        <CalendarView x:Name="MainCalendar" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,10,0,0" Height="291" SelectedDatesChanged="MainCalendar_SelectedDatesChanged" Loaded="MainCalendar_Loaded"/>
 
         <!-- Lista wszystkich wpisów -->
 
-        <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Text="Ostatnio przeglądane:"  VerticalAlignment="Top" Margin="10,25,0,0"/>
-        <ListView x:Name="entriesListView" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Margin="0,65,0,0"/>
-        <Pivot x:Name="mainPivot" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" GotFocus="mainPivot_GotFocus">
+        <TextBlock x:Name="ListViewHeader" Text="Ostatnio przeglądane:" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,25,0,0"/>
+        <ListView x:Name="EntriesListView" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,65,0,0" Width="300" />
+        <Pivot x:Name="MainPivot" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" GotFocus="MainPivot_GotFocus">
             <PivotItem Loaded="PivotItem_Loaded">
                 <!-- Treść wpisu -->
-                <RichEditBox x:Name="mainBox" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  Margin="0,0,0,10" VerticalAlignment="Stretch" PlaceholderText="Brak wpisów tego dnia..."/>
+                <RichEditBox x:Name="MainBox" PlaceholderText="Brak wpisów tego dnia..." Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,10" FontSize="13"/>
             </PivotItem>
         </Pivot>
         
-        <!-- Potwierdzenie operacji -->
+        <!-- Popup dla usuwania -->
 
-        <Popup x:Name="ConfirmationPopup" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center" Grid.RowSpan="3" Grid.Row="1" Margin="-205,140,0,0" IsOpen="False" >
-            <Grid Padding="60" Width="680" Height="Auto" Background="IndianRed">
+        <Popup x:Name="DeletePopup" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Center" Margin="-205,140,0,0" IsOpen="False" >
+            <Grid Padding="60" Width="680" Height="Auto" Background="#FFAFBD22">
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock x:Name="ConfirmationTextBlock1" HorizontalAlignment="Center"><Bold>Czy na pewno chcesz usunąć ten wpis?</Bold></TextBlock>
-                    <TextBlock x:Name="ConfirmationTextBlock2" HorizontalAlignment="Center" Text="Ta operacja jest nieodwracalna..."/>
-                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                        <Button x:Name="NoBtn" Width="100" Content="NIE" Margin="0,20,20,0" Click="NoBtn_Click"/>
-                        <Button x:Name="YesBtn" Width="100" Content="TAK" Margin="0,20,0,0" Click="YesBtn_Click"/>
+                    <TextBlock x:Name="DeleteTextBlock1" Text="Czy na pewno chcesz usunąć ten wpis?" HorizontalAlignment="Center" FontWeight="Bold"/>
+                    <TextBlock x:Name="DeleteTextBlock2" Text="Ta operacja jest nieodwracalna..." HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="DeleteNoBtn" Content="NIE" Margin="0,20,20,0" Width="100" FontWeight="SemiBold" Click="DeleteNoBtn_Click"/>
+                        <Button x:Name="DeleteYesBtn" Content="TAK" Margin="0,20,0,0" Width="100" FontWeight="SemiBold" Click="DeleteYesBtn_Click"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>

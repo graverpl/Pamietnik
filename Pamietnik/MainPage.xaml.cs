@@ -52,7 +52,7 @@ namespace Pamietnik
 
         // Przejście do rejestracji
 
-        private void TextBlock_Tapped(object sender, TappedRoutedEventArgs e)
+        private void RegisterFwdTextBlock_Tapped(object sender, TappedRoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(Registration));
         }
