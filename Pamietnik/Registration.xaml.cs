@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 
 namespace Pamietnik
@@ -22,7 +23,7 @@ namespace Pamietnik
 
         #region Program
 
-        // Formularz rejestracji
+        // Formularz rejestracyjny
 
         private async void SignUpBtn_Click(object sender, RoutedEventArgs e)
         {

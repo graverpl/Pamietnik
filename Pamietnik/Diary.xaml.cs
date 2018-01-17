@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using MySql.Data.MySqlClient;
 using Windows.UI.Text;
-
+using MySql.Data.MySqlClient;
 
 namespace Pamietnik
 {
@@ -47,7 +49,6 @@ namespace Pamietnik
             {
                 MainBox.Document.SetText(TextSetOptions.None, Messages.GeneralError());
             }
-
 
             // Wyświetlenie imienia
 
