@@ -30,7 +30,7 @@ namespace Pamietnik
 
         internal static string ConnectionError()
         {
-            return "Błąd połączenia z bazą danych" + "\nProszę spróbować za chwilę...";
+            return "Błąd połączenia z bazą danych. Proszę spróbować za chwilę...";
         }
 
         internal static string UserExists()
@@ -40,12 +40,22 @@ namespace Pamietnik
 
         internal static string GeneralError()
         {
-            return "Wystąpił nieokreślony błąd." + "\nProszę spróbować za chwilę...";
+            return "Przepraszamy, wystąpił nieokreślony błąd. ";
+        }
+
+        internal static string SaveSuccess()
+        {
+            return "Operacja wykonana pomyślnie. Wpis został zapisany.";
+        }
+
+        internal static string EditSuccess()
+        {
+            return "Operacja wykonana pomyślnie. Wpis został zmieniony.";
         }
 
         internal static string DeleteSuccess()
         {
-            return "Wpis został usunięty. Brak wpisów tego dnia...";
+            return "Operacja wykonana pomyślnie. Wpis został usunięty.";
         }
     }
 }

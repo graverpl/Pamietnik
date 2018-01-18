@@ -69,7 +69,7 @@
 
         <!-- Popup dla usuwania -->
 
-        <Popup x:Name="DeletePopup" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Center" Margin="-172,165,0,0" IsOpen="False" >
+        <Popup x:Name="DeletePopup" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Center" Margin="-172,165,0,0" IsOpen="False">
             <Grid Padding="60" Width="635" Height="Auto" Background="#FFAFBD22">
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock x:Name="DeleteTextBlock1" Text="Czy na pewno chcesz usunąć ten wpis?" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="White" TextWrapping="Wrap"/>
@@ -84,7 +84,7 @@
 
         <!-- Popup dla edycji -->
 
-        <Popup x:Name="EditPopup" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Center" Margin="-172,165,0,0" IsOpen="False" >
+        <Popup x:Name="EditPopup" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Center" Margin="-172,165,0,0" IsOpen="False">
             <Grid Padding="60" Width="635" Height="Auto" Background="#FFAFBD22">
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock x:Name="EditTextBlock1" Text="Zamierzasz nadpisać istniejący wpis." HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="White" TextWrapping="Wrap"/>
@@ -96,9 +96,18 @@
                 </StackPanel>
             </Grid>
         </Popup>
-        
-        <Image x:Name="NotebookImg" Source="Images/notes.png"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,36,0,0"/>
 
+        <!-- Popup ze statusem operacji -->
+
+        <Popup x:Name="StatusPopup" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Center" Margin="-172,240,0,0" IsOpen="False">
+            <Grid Padding="60" Width="635" Height="Auto" Background="#eaeded" BorderBrush="#FFAFBD22" BorderThickness="3,3,3,3">
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock x:Name="PopupStatusTextBlock" HorizontalAlignment="Center" FontSize="14" FontWeight="Normal" Foreground="#FFAFBD22" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
+        </Popup>
+
+        <Image x:Name="NotebookImg" Source="Images/notes.png"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,36,0,0"/>
 
     </Grid>
 </Page>

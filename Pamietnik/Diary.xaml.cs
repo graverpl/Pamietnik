@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Text;
 using MySql.Data.MySqlClient;
+using Windows.UI.Xaml.Media;
 
 namespace Pamietnik
 {
@@ -29,25 +31,37 @@ namespace Pamietnik
 
         #region Program
 
+        // Popup z komunikatem o błędzie
+
+        internal async void ErrorInfo(string error)
+        {
+            StatusPopup.IsOpen = true;
+            PopupStatusTextBlock.Foreground = new SolidColorBrush(Colors.DarkRed);
+            PopupStatusTextBlock.Text = error;
+            await Task.Delay(2000);
+            StatusPopup.IsOpen = false;
+        }
+
+        internal async void SuccessInfo(string success)
+        {
+            StatusPopup.IsOpen = true;
+            PopupStatusTextBlock.Text = success;
+            await Task.Delay(2000);
+            StatusPopup.IsOpen = false;
+        }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             // Data bieżąca i odliczanie
 
-            try
-            {
-                DateTime stopDate = DateTime.Parse("12/2/2018");
-                DateTime startDate = DateTime.Now;
+            DateTime stopDate = DateTime.Parse("12/2/2018");
+            DateTime startDate = DateTime.Now;
 
-                TimeSpan timeLeft = stopDate - startDate;
-                countdown = string.Format("Do ferii zimowych pozostało {0} dni.", timeLeft.Days);
+            TimeSpan timeLeft = stopDate - startDate;
+            countdown = string.Format("Do ferii zimowych pozostało {0} dni.", timeLeft.Days);
 
-                CountdownTextBlock.Text = countdown;
-                DateTextBlock.Text = "Dzisiaj jest " + DateTime.Today.ToString("D") + " r.";
-            }
-            catch (Exception)
-            {
-                MainBox.Document.SetText(TextSetOptions.None, Messages.GeneralError());
-            }
+            CountdownTextBlock.Text = countdown;
+            DateTextBlock.Text = "Dzisiaj jest " + DateTime.Today.ToString("D") + " r.";
 
             // Wyświetlenie imienia
 
@@ -76,14 +90,7 @@ namespace Pamietnik
 
         private void MainCalendar_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                MainCalendar.SelectedDates.Add(DateTime.Now);
-            }
-            catch (Exception)
-            {
-                MainBox.Document.SetText(TextSetOptions.None, Messages.GeneralError());
-            }
+            MainCalendar.SelectedDates.Add(DateTime.Now);
         }
 
         private void MainCalendar_SelectedDatesChanged(CalendarView sender, CalendarViewSelectedDatesChangedEventArgs args)
@@ -102,7 +109,8 @@ namespace Pamietnik
             }
             catch (MySqlException)
             {
-                MainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+                MainBox.Document.SetText(TextSetOptions.None, "");
+                ErrorInfo(Messages.ConnectionError());
             }
         }
 
@@ -110,33 +118,28 @@ namespace Pamietnik
 
         private void SaveEntryBtn_Click(object sender, RoutedEventArgs e)
         {
-            DbConnections.CheckEntry(DbConnections.user, date);
+            try
+            {
+                DbConnections.CheckEntry(DbConnections.user, date);
 
-            if (DbConnections.count > 0)
-            {
-                EditPopup.IsOpen = true;
-            }
-            else
-            {
-                try
+                if (DbConnections.count > 0)
+                {
+                    EditPopup.IsOpen = true;
+                }
+                else
                 {
                     MainBox.Document.GetText(TextGetOptions.None, out string entryText);
                     DbConnections.entry = entryText;
                     DbConnections.author = DbConnections.user;
-
-                    try
-                    {
-                        DbConnections.SaveEntry(DbConnections.user, date, entryText);
-                    }
-                    catch (MySqlException)
-                    {
-                        MainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
-                    }
+                    DbConnections.SaveEntry(DbConnections.user, date, entryText);
+                    MainBox.Document.SetText(TextSetOptions.None, entryText);
+                    SuccessInfo(Messages.SaveSuccess());
                 }
-                catch (MySqlException)
-                {
-                    MainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
-                }
+            }
+            catch (MySqlException)
+            {
+                EditPopup.IsOpen = false;
+                ErrorInfo(Messages.ConnectionError());
             }
         }
 
@@ -149,20 +152,15 @@ namespace Pamietnik
                 MainBox.Document.GetText(TextGetOptions.None, out string entryText);
                 DbConnections.entry = entryText;
                 DbConnections.author = DbConnections.user;
-
-                try
-                {
-                    DbConnections.EditEntry(DbConnections.user, date, entryText);
-                    EditPopup.IsOpen = false;
-                }
-                catch (MySqlException)
-                {
-                    MainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
-                }
+                DbConnections.EditEntry(DbConnections.user, date, entryText);
+                MainBox.Document.SetText(TextSetOptions.None, entryText);
+                EditPopup.IsOpen = false;
+                SuccessInfo(Messages.EditSuccess());
             }
             catch (MySqlException)
             {
-                MainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+                EditPopup.IsOpen = false;
+                ErrorInfo(Messages.ConnectionError());
             }
         }
 
@@ -183,12 +181,14 @@ namespace Pamietnik
             try
             {
                 DbConnections.DeleteEntry(DbConnections.user, date);
-                MainBox.Document.SetText(TextSetOptions.None, Messages.DeleteSuccess());
+                MainBox.Document.SetText(TextSetOptions.None, "");
                 DeletePopup.IsOpen = false;
+                SuccessInfo(Messages.DeleteSuccess());
             }
             catch (MySqlException)
             {
-                MainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+                DeletePopup.IsOpen = false;
+                ErrorInfo(Messages.ConnectionError());
             }
         }
 
