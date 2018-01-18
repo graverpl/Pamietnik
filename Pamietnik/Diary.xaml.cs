@@ -33,7 +33,7 @@ namespace Pamietnik
 
         // Popup z komunikatami
 
-        internal async void ErrorInfo(string error)
+        private async void ErrorInfo(string error)
         {
             StatusPopup.IsOpen = true;
             PopupStatusTextBlock.Foreground = new SolidColorBrush(Colors.DarkRed);
@@ -42,12 +42,17 @@ namespace Pamietnik
             StatusPopup.IsOpen = false;
         }
 
-        internal async void SuccessInfo(string success)
+        private async void SuccessInfo(string success)
         {
             StatusPopup.IsOpen = true;
             PopupStatusTextBlock.Text = success;
             await Task.Delay(2000);
             StatusPopup.IsOpen = false;
+        }
+
+        private void SetText(string text)
+        {
+            MainBox.Document.SetText(TextSetOptions.None, text);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -105,11 +110,11 @@ namespace Pamietnik
 
             try
             {
-                MainBox.Document.SetText(TextSetOptions.None, DbConnections.ShowEntry(DbConnections.user, date));
+                SetText(DbConnections.ShowEntry(DbConnections.user, date));
             }
             catch (MySqlException)
             {
-                MainBox.Document.SetText(TextSetOptions.None, "Nie można pobrać zawartości...");
+                SetText("Nie można pobrać zawartości...");
                 ErrorInfo(Messages.ConnectionError());
             }
         }
@@ -132,7 +137,7 @@ namespace Pamietnik
                     DbConnections.entry = entryText;
                     DbConnections.author = DbConnections.user;
                     DbConnections.SaveEntry(DbConnections.user, date, entryText);
-                    MainBox.Document.SetText(TextSetOptions.None, entryText);
+                    SetText(entryText);
                     SuccessInfo(Messages.SaveSuccess());
                 }
             }
@@ -153,7 +158,7 @@ namespace Pamietnik
                 DbConnections.entry = entryText;
                 DbConnections.author = DbConnections.user;
                 DbConnections.EditEntry(DbConnections.user, date, entryText);
-                MainBox.Document.SetText(TextSetOptions.None, entryText);
+                SetText(entryText);
                 EditPopup.IsOpen = false;
                 SuccessInfo(Messages.EditSuccess());
             }
@@ -183,7 +188,7 @@ namespace Pamietnik
                 }
                 else
                 {
-                    MainBox.Document.SetText(TextSetOptions.None, "");
+                    SetText("");
                     ErrorInfo(Messages.EntryNotFound());
                 }
             }
@@ -198,7 +203,7 @@ namespace Pamietnik
             try
             {
                 DbConnections.DeleteEntry(DbConnections.user, date);
-                MainBox.Document.SetText(TextSetOptions.None, "");
+                SetText("");
                 DeletePopup.IsOpen = false;
                 SuccessInfo(Messages.DeleteSuccess());
             }
