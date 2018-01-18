@@ -31,7 +31,7 @@ namespace Pamietnik
 
         #region Program
 
-        // Popup z komunikatem o błędzie
+        // Popup z komunikatami
 
         internal async void ErrorInfo(string error)
         {
@@ -109,7 +109,7 @@ namespace Pamietnik
             }
             catch (MySqlException)
             {
-                MainBox.Document.SetText(TextSetOptions.None, "");
+                MainBox.Document.SetText(TextSetOptions.None, "Nie można pobrać zawartości...");
                 ErrorInfo(Messages.ConnectionError());
             }
         }
@@ -173,7 +173,24 @@ namespace Pamietnik
 
         private void DeleteEntryBtn_Click(object sender, RoutedEventArgs e)
         {
-            DeletePopup.IsOpen = true;
+            try
+            {
+                DbConnections.CheckEntry(DbConnections.user, date);
+
+                if (DbConnections.count > 0)
+                {
+                    DeletePopup.IsOpen = true;
+                }
+                else
+                {
+                    MainBox.Document.SetText(TextSetOptions.None, "");
+                    ErrorInfo(Messages.EntryNotFound());
+                }
+            }
+            catch (MySqlException)
+            {
+                ErrorInfo(Messages.ConnectionError());
+            }
         }
 
         private void DeleteYesBtn_Click(object sender, RoutedEventArgs e)

@@ -57,5 +57,10 @@ namespace Pamietnik
         {
             return "Operacja wykonana pomyślnie. Wpis został usunięty.";
         }
+
+        internal static string EntryNotFound()
+        {
+            return "Nie można wykonać operacji. Brak wpisów do usunięcia.";
+        }
     }
 }
