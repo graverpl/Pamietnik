@@ -110,6 +110,40 @@ namespace Pamietnik
 
         private void SaveEntryBtn_Click(object sender, RoutedEventArgs e)
         {
+            DbConnections.CheckEntry(DbConnections.user, date);
+
+            if (DbConnections.count > 0)
+            {
+                EditPopup.IsOpen = true;
+            }
+            else
+            {
+                try
+                {
+                    MainBox.Document.GetText(TextGetOptions.None, out string entryText);
+                    DbConnections.entry = entryText;
+                    DbConnections.author = DbConnections.user;
+
+                    try
+                    {
+                        DbConnections.SaveEntry(DbConnections.user, date, entryText);
+                    }
+                    catch (MySqlException)
+                    {
+                        MainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+                    }
+                }
+                catch (MySqlException)
+                {
+                    MainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
+                }
+            }
+        }
+
+        // Edycja wpisu
+
+        private void EditYesBtn_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
                 MainBox.Document.GetText(TextGetOptions.None, out string entryText);
@@ -118,7 +152,8 @@ namespace Pamietnik
 
                 try
                 {
-                    DbConnections.SaveEntry(DbConnections.user, date, entryText);
+                    DbConnections.EditEntry(DbConnections.user, date, entryText);
+                    EditPopup.IsOpen = false;
                 }
                 catch (MySqlException)
                 {
@@ -129,6 +164,11 @@ namespace Pamietnik
             {
                 MainBox.Document.SetText(TextSetOptions.None, Messages.ConnectionError());
             }
+        }
+
+        private void EditNoBtn_Click(object sender, RoutedEventArgs e)
+        {
+            EditPopup.IsOpen = false;
         }
 
         // Usuwanie wpisu

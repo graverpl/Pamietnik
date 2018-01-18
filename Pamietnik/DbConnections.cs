@@ -101,52 +101,6 @@ namespace Pamietnik
             }
         }
 
-        // Zapis lub edycja wpisu
-
-        internal static void SaveEntry(string author, string date, string entry)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connString))
-            {
-                conn.Open();
-
-                // Sprawdzenie, czy wpis istnieje
-
-                using (MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) " + "FROM entries " + "WHERE Author=@author AND EntryDate=@date;", conn))
-                {
-                    cmd.Parameters.AddWithValue("@author", author);
-                    cmd.Parameters.AddWithValue("@date", date);
-                    cmd.ExecuteNonQuery();
-                    count = (int)(long)cmd.ExecuteScalar();
-                }
-
-                // Edycja istniejącego wpisu
-
-                if (count > 0)
-                {
-                    using (MySqlCommand cmd = new MySqlCommand("UPDATE entries " + "SET Entry=@entry " + "WHERE Author=@author AND EntryDate=@date;", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@author", author);
-                        cmd.Parameters.AddWithValue("@date", date);
-                        cmd.Parameters.AddWithValue("@entry", entry);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-
-                // Tworzenie nowego wpisu
-
-                else
-                {
-                    using (MySqlCommand cmd = new MySqlCommand("INSERT INTO entries " + "(Author, Entry, EntryDate) " + "VALUES " + "(@author, @entry, @date);", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@author", author);
-                        cmd.Parameters.AddWithValue("@entry", entry);
-                        cmd.Parameters.AddWithValue("@date", date);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-            }
-        }
-
         // Pobieranie wpisu
 
         internal static string ShowEntry(string author, string date)
@@ -171,6 +125,61 @@ namespace Pamietnik
                         }
                         return entry;
                     }
+                }
+            }
+        }
+
+        // Sprawdzanie istnienia wpisu
+
+        internal static int CheckEntry(string author, string date)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            {
+                conn.Open();
+
+                using (MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) " + "FROM entries " + "WHERE Author=@author AND EntryDate=@date;", conn))
+                {
+                    cmd.Parameters.AddWithValue("@author", author);
+                    cmd.Parameters.AddWithValue("@date", date);
+                    cmd.ExecuteNonQuery();
+                    count = (int)(long)cmd.ExecuteScalar();
+                }
+            }
+            return count;
+        }
+
+        // Tworzenie nowego wpisu
+
+        internal static void SaveEntry(string author, string date, string entry)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            {
+                conn.Open();
+
+                using (MySqlCommand cmd = new MySqlCommand("INSERT INTO entries " + "(Author, Entry, EntryDate) " + "VALUES " + "(@author, @entry, @date);", conn))
+                {
+                    cmd.Parameters.AddWithValue("@author", author);
+                    cmd.Parameters.AddWithValue("@entry", entry);
+                    cmd.Parameters.AddWithValue("@date", date);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Edycja wpisu
+
+        internal static void EditEntry(string author, string date, string entry)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            {
+                conn.Open();
+
+                using (MySqlCommand cmd = new MySqlCommand("UPDATE entries " + "SET Entry=@entry " + "WHERE Author=@author AND EntryDate=@date;", conn))
+                {
+                    cmd.Parameters.AddWithValue("@author", author);
+                    cmd.Parameters.AddWithValue("@date", date);
+                    cmd.Parameters.AddWithValue("@entry", entry);
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

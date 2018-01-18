@@ -52,31 +52,46 @@
         </StackPanel>
 
         <!-- Widok kalendarza -->
-
-        <CalendarView x:Name="MainCalendar" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,45,0,0" Height="291" OutOfScopeBackground="#FF939BA1" CalendarItemBackground="WhiteSmoke" FirstDayOfWeek="Monday" CalendarIdentifier="GregorianCalendar" Background="#FFAFBD22" SelectedBorderBrush="#FF2BC5F9" HoverBorderBrush="#FFAFBD22" CalendarItemBorderBrush="#FF939BA1" CalendarItemBorderThickness="1,1,1,1" SelectedDatesChanged="MainCalendar_SelectedDatesChanged" Loaded="MainCalendar_Loaded">
-            <CalendarView.SelectedPressedBorderBrush>
-                <SolidColorBrush Color="#FF2BC5F9" Opacity="0.7"/>
-            </CalendarView.SelectedPressedBorderBrush>
-            <CalendarView.SelectedHoverBorderBrush>
-                <SolidColorBrush Color="#FF2BC5F9" Opacity="0.6"/>
-            </CalendarView.SelectedHoverBorderBrush>
-        </CalendarView>
-
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <CalendarView x:Name="MainCalendar"  Margin="0,45,0,0" Height="291" OutOfScopeBackground="#FF939BA1" CalendarItemBackground="WhiteSmoke" FirstDayOfWeek="Monday" CalendarIdentifier="GregorianCalendar" Background="#FFAFBD22" SelectedBorderBrush="#FF2BC5F9" HoverBorderBrush="#FFAFBD22" CalendarItemBorderBrush="#FF939BA1" CalendarItemBorderThickness="1,1,1,1" SelectedDatesChanged="MainCalendar_SelectedDatesChanged" Loaded="MainCalendar_Loaded">
+                <CalendarView.SelectedPressedBorderBrush>
+                    <SolidColorBrush Color="#FF2BC5F9" Opacity="0.7"/>
+                </CalendarView.SelectedPressedBorderBrush>
+                <CalendarView.SelectedHoverBorderBrush>
+                    <SolidColorBrush Color="#FF2BC5F9" Opacity="0.6"/>
+                </CalendarView.SelectedHoverBorderBrush>
+            </CalendarView>
+        </StackPanel>
         <!-- Treść wpisu -->
 
         <TextBlock x:Name="CurrentEntryDateTextBlock" Grid.Column="0" Grid.Row="2" Margin="13,25,0,0" FontSize="13" TextWrapping="Wrap"/>
-        <RichEditBox x:Name="MainBox" PlaceholderText="Brak wpisów tego dnia..." Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Margin="10,50,10,10" FontSize="13" Width="Auto" TextWrapping="Wrap"/>
-        
+        <RichEditBox x:Name="MainBox" PlaceholderText="Brak wpisów tego dnia..." Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Margin="10,50,10,10" Width="Auto" FontSize="13" TextWrapping="Wrap"/>
+
         <!-- Popup dla usuwania -->
 
         <Popup x:Name="DeletePopup" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Center" Margin="-172,165,0,0" IsOpen="False" >
             <Grid Padding="60" Width="635" Height="Auto" Background="#FFAFBD22">
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock x:Name="DeleteTextBlock1" Text="Czy na pewno chcesz usunąć ten wpis?" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="White"/>
-                    <TextBlock x:Name="DeleteTextBlock2" Text="Ta operacja jest nieodwracalna..." HorizontalAlignment="Center" Foreground="White"/>
+                    <TextBlock x:Name="DeleteTextBlock1" Text="Czy na pewno chcesz usunąć ten wpis?" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="White" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="DeleteTextBlock2" Text="Ta operacja jest nieodwracalna..." HorizontalAlignment="Center" Foreground="White" TextWrapping="Wrap"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button x:Name="DeleteNoBtn" Content="NIE" Margin="0,20,20,0" Width="100" FontWeight="SemiBold" Foreground="WhiteSmoke" Click="DeleteNoBtn_Click" Background="#FF939BA1"/>
                         <Button x:Name="DeleteYesBtn" Content="TAK" Margin="0,20,0,0" Width="100" FontWeight="SemiBold" Foreground="WhiteSmoke" Click="DeleteYesBtn_Click" Background="#FF939BA1"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Popup>
+
+        <!-- Popup dla edycji -->
+
+        <Popup x:Name="EditPopup" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Center" Margin="-172,165,0,0" IsOpen="False" >
+            <Grid Padding="60" Width="635" Height="Auto" Background="#FFAFBD22">
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock x:Name="EditTextBlock1" Text="Zamierzasz nadpisać istniejący wpis." HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="White" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="EditTextBlock2" Text="Czy chcesz kontynuować?" HorizontalAlignment="Center" Foreground="White" TextWrapping="Wrap"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="EditNoBtn" Content="NIE" Margin="0,20,20,0" Width="100" FontWeight="SemiBold" Foreground="WhiteSmoke" Background="#FF939BA1" Click="EditNoBtn_Click"/>
+                        <Button x:Name="EditYesBtn" Content="TAK" Margin="0,20,0,0" Width="100" FontWeight="SemiBold" Foreground="WhiteSmoke" Background="#FF939BA1" Click="EditYesBtn_Click"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
