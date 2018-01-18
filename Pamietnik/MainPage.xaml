@@ -46,7 +46,7 @@
             <TextBox x:Name="UserTextBox" PlaceholderText="Login..." HorizontalAlignment="Center" Margin="0,20,0,0" Width="200" Background="White" FontSize="11" BorderThickness="0,0,0,0"/>
             <PasswordBox x:Name="PassBox" PlaceholderText="Hasło..." HorizontalAlignment="Center" Margin="0,10,0,0" Width="200" Background="White" FontSize="11" BorderThickness="0,0,0,0"/>
             <Button x:Name="LoginBtn" Content="WYŚLIJ" HorizontalAlignment="Center" Margin="0,10,0,0" Width="200" Background="#FFAFBD22" FontSize="16" Foreground="WhiteSmoke" Click="LoginBtn_Click"/>
-            <TextBlock x:Name="RegisterFwdTextBlock" HorizontalTextAlignment="Center" Margin="0,15,0,0" FontSize="13" Foreground="White" Tapped="RegisterFwdTextBlock_Tapped">
+            <TextBlock x:Name="RegisterFwdTextBlock" HorizontalTextAlignment="Center" Margin="0,15,0,0" FontSize="13" Foreground="White" TextWrapping="Wrap" Tapped="RegisterFwdTextBlock_Tapped">
                 <Span> Nie masz konta?</Span>
                 <Span TextDecorations="Underline"> Zarejestruj się...</Span>
             </TextBlock>

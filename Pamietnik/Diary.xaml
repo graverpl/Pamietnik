@@ -41,11 +41,11 @@
 
         <!-- Sekcja powitalna -->
 
-        <StackPanel Grid.Column="0" Grid.Row="1" Margin="60,40,165,0" >
-            <TextBlock x:Name="WelcomeTextBlock" HorizontalAlignment="Left" FontSize="20"/>
-            <TextBlock x:Name="DateTextBlock" HorizontalAlignment="Left" Margin="0,20,0,0"/>
-            <TextBlock x:Name="CountdownTextBlock" HorizontalAlignment="Left"/>
-            <TextBlock x:Name="JokeTextBlockHeader" HorizontalAlignment="Left" Margin="0,20,0,0">
+        <StackPanel Grid.Column="0" Grid.Row="1" Margin="40,40,60,0" >
+            <TextBlock x:Name="WelcomeTextBlock" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"/>
+            <TextBlock x:Name="DateTextBlock" HorizontalAlignment="Left" Margin="0,20,0,0" TextWrapping="Wrap"/>
+            <TextBlock x:Name="CountdownTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+            <TextBlock x:Name="JokeTextBlockHeader" HorizontalAlignment="Left" Margin="0,20,0,0" TextWrapping="Wrap">
                 <Span TextDecorations="Underline"> Dowcip na dziś:</Span>
             </TextBlock>
             <TextBlock x:Name="JokeTextBlock" HorizontalAlignment="Left" Margin="0,20,0,0" FontStyle="Italic" TextWrapping="Wrap"/>
@@ -62,29 +62,17 @@
             </CalendarView.SelectedHoverBorderBrush>
         </CalendarView>
 
-        <!-- Lista wszystkich wpisów -->
+        <!-- Treść wpisu -->
 
-        <TextBlock x:Name="ListViewHeader" Text="Ostatnio przeglądane:" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,40,0,0"/>
-        <ListView x:Name="EntriesListView" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,67,0,0" Width="162" Background="#FFAFBD22">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="FontSize" Value="14"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
-        <Pivot x:Name="MainPivot" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" GotFocus="MainPivot_GotFocus">
-            <PivotItem Loaded="PivotItem_Loaded">
-                <!-- Treść wpisu -->
-                <RichEditBox x:Name="MainBox" PlaceholderText="Brak wpisów tego dnia..." Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,10" FontSize="13" />
-            </PivotItem>
-        </Pivot>
-
+        <TextBlock x:Name="CurrentEntryDateTextBlock" Grid.Column="0" Grid.Row="2" Margin="13,25,0,0" FontSize="13" TextWrapping="Wrap"/>
+        <RichEditBox x:Name="MainBox" PlaceholderText="Brak wpisów tego dnia..." Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Margin="10,50,10,10" FontSize="13" Width="Auto" TextWrapping="Wrap"/>
+        
         <!-- Popup dla usuwania -->
 
         <Popup x:Name="DeletePopup" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Center" Margin="-172,165,0,0" IsOpen="False" >
             <Grid Padding="60" Width="635" Height="Auto" Background="#FFAFBD22">
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock x:Name="DeleteTextBlock1" Text="Czy na pewno chcesz usunąć ten wpis?" HorizontalAlignment="Center" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock x:Name="DeleteTextBlock1" Text="Czy na pewno chcesz usunąć ten wpis?" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Foreground="White"/>
                     <TextBlock x:Name="DeleteTextBlock2" Text="Ta operacja jest nieodwracalna..." HorizontalAlignment="Center" Foreground="White"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button x:Name="DeleteNoBtn" Content="NIE" Margin="0,20,20,0" Width="100" FontWeight="SemiBold" Foreground="WhiteSmoke" Click="DeleteNoBtn_Click" Background="#FF939BA1"/>

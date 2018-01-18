@@ -14,8 +14,7 @@ namespace Pamietnik
     {
         #region Zmienne
 
-        private RichEditBox currentRichEditBox;
-        private string countdown, date;
+        private string countdown, date, currentEntryDate;
 
         #endregion
 
@@ -71,31 +70,6 @@ namespace Pamietnik
             {
                 JokeTextBlock.Text = "";
             }
-
-            
-
-        }
-
-        // Ustawianie aktywnego pola
-
-        private void PivotItem_Loaded(System.Object sender, RoutedEventArgs e)
-        {
-            PivotItem pi = sender as PivotItem;
-            RichEditBox_SetFocus(pi);
-        }
-
-        private void MainPivot_GotFocus(object sender, RoutedEventArgs e)
-        {
-            Pivot p = sender as Pivot;
-            PivotItem pi = p.SelectedItem as PivotItem;
-            RichEditBox_SetFocus(pi);
-        }
-
-        private void RichEditBox_SetFocus(PivotItem pi)
-        {
-            RichEditBox reb = pi.Content as RichEditBox;
-            currentRichEditBox = reb;
-            reb.Focus(FocusState.Keyboard);
         }
 
         // Obsługa kalendarza
@@ -117,7 +91,8 @@ namespace Pamietnik
             try
             {
                 date = MainCalendar.SelectedDates[0].ToString("yyyy-MM-dd");
-                EntriesListView.Items.Add(MainCalendar.SelectedDates[0].ToString("yyyy-MM-dd (dddd)"));
+                currentEntryDate = MainCalendar.SelectedDates[0].ToString("d MMMM (dddd)");
+                CurrentEntryDateTextBlock.Text = $"Twój wpis z dnia {currentEntryDate}:";
             }
             catch (System.Runtime.InteropServices.COMException) { }
 
@@ -137,7 +112,7 @@ namespace Pamietnik
         {
             try
             {
-                currentRichEditBox.Document.GetText(TextGetOptions.None, out string entryText);
+                MainBox.Document.GetText(TextGetOptions.None, out string entryText);
                 DbConnections.entry = entryText;
                 DbConnections.author = DbConnections.user;
 
